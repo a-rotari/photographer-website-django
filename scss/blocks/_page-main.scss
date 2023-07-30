@@ -1,0 +1,7 @@
+@use '../global/variables' as g;
+
+.page-main {
+    background-color: g.$background;
+}
+
+// TODO: delete this file if it turns out to be redundant

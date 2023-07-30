@@ -1,0 +1,19 @@
+@use '../global/variables' as g;
+
+.page {
+    font-size: 14px;
+    line-height: 26px;
+    font-family: "IBM Plex Mono", monospace;
+    margin: auto;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      min-width: 320px;
+      min-height: 100%;
+      margin: auto;
+      max-width: 100%;
+      background-color: g.$background;
+      color: g.$text-primary;
+    }
+  }

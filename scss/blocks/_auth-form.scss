@@ -1,0 +1,69 @@
+@use '../global/variables' as g;
+
+.auth-form {
+    margin-block-end: 30px;
+
+    @media (min-width: g.$tablet-width) {
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        align-items: flex-start;
+        margin: 0 auto;
+    }
+
+    &__title {
+        font-family: "Lato", sans-serif;
+        margin-block-start: 20px;
+        margin-block-end: 20px;
+        font-size: 22px;
+
+        @media (min-width: g.$tablet-width) {
+            text-transform: uppercase;
+            margin-block-start: 0;
+        }
+    }
+
+    &__subtitle {
+        margin-block-end: 10px;
+
+        @media (min-width: g.$tablet-width) {
+            font-size: 20px;
+        }
+    }
+
+    &__form {
+        width: 300px;
+
+        @media (min-width: g.$tablet-width) {
+            width: 500px;
+            font-size: 18px;
+            margin-block-start: 20px;
+        }
+
+        & .errorlist {
+            color: g.$color-error;
+            margin-block-end: 20px;
+        }
+    }
+
+    &__form p {
+        margin-block-end: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        @media (min-width: g.$tablet-width) {
+            margin-block-end: 16px;
+        }
+    }
+
+    &__form-input {
+        margin-block-start: 10px;
+        margin-block-end: 20px;
+
+        @media (min-width: g.$tablet-width) {
+            margin-block-start: 20px;
+            margin-block-end: 30px;
+        }
+    }
+}

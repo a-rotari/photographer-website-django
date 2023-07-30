@@ -1,0 +1,29 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+
+{% block title %}Create Appointment{% endblock title %}
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/category/">Category</a></li>
+            <li><a href="/category/subcategory/">Subcategory</a></li>
+            <li>Current Page</li>
+        </ol>
+    </nav>
+{% endblock breadcrumbs %}
+{% block content %}
+    <section class="auth-form">
+        <h1 class="auth-form__title">Please Log In</h1>
+        <p class="auth-form__subtitle">It seems that there's already a client with the email you've entered.</p>
+        <p class="auth-form__subtitle">Please enter your password to log in and make an appointment.</p>
+        <form class="auth-form__form" action="{% url 'appointments:login_and_create_appointment' %}" method="post">
+                {{ form.as_p }}
+            <input class="auth-form__form-input" type="submit" value="Login And Make An Appointment">
+            {% csrf_token %}
+            <p>Forgot your password? <a href="{% url 'users:password_reset' %}"><b>Click here.</b></a></p>
+            <p><a href="{% url 'appointments:create_appointment' %}"><b>Back to the calendar</b></a></p>
+        </form>
+    </section>
+{% endblock content %}
+

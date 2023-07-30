@@ -1,0 +1,17 @@
+{% extends 'galleries/galleries_base.html' %}
+{% load static %}
+
+{% block title %}Personal Page{% endblock title %}
+
+{% block content %}
+    <section class="galleries">
+        {% for gallery in galleries %}
+            <div class="galleries__wrapper">
+                <a class="galleries__image-link" href="{% url 'galleries:display_gallery' gallery.slug %}">
+                    <img class="galleries__image" src="{{ gallery.thumbnail }}" alt="Gallery thumbnail" />
+                </a>
+                <a class="galleries__title-link" href="{% url 'galleries:display_gallery' gallery.slug %}">{{ gallery.title }}</a>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock content %}

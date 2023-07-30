@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  django_gunicorn:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - /var/www/mariarotari.com/static:/static
+      - /var/www/mariarotari.com/media:/media
+    ports:
+      - "127.0.0.1:8000:8000"
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"

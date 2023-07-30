@@ -1,0 +1,108 @@
+/* Reset CSS */
+@use './variables' as g;
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+menu:not(article menu),
+ol:not(article ol),
+ul:not(article ul) {
+    list-style: none;
+}
+
+menu,
+ol,
+ul {
+    padding-left: 0;
+}
+
+article ol,
+article ul {
+    list-style-position: inside;
+}
+
+label,
+button,
+select,
+summary,
+[type=radio],
+[type=submit],
+[type=checkbox] {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline dotted;
+    text-underline-offset: 8px;
+    text-decoration-color: rgba(g.$text-primary, 0.5);
+    text-decoration-thickness: 0.12em;
+}
+
+legend {
+    padding: 0;
+    display: table;
+}
+
+fieldset {
+    border: 0;
+    padding: 0.01em 0 0 0;
+    margin: 0;
+    min-width: 0;
+}
+
+
+details > summary {
+    list-style-type: '\0025B7   ';
+}
+
+details[open] > summary {
+    list-style-type: '\0025BD   ';
+}
+
+// details > summary::after {
+//     content: "\2630"; /* Insert content that looks like bullets */
+//     padding-left: 8px;
+//     // color: blue; /* Or a color you prefer */
+// }
+
+// details[open] > summary::after {
+//     content: "\0025BD"; /* Insert content that looks like bullets */
+//     padding-left: 8px;
+//     // color: blue; /* Or a color you prefer */
+// }

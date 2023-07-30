@@ -1,0 +1,18 @@
+@use '../global/variables' as g;
+
+.page-footer {
+    // min-height: 140px;
+    margin-block-start: auto;
+
+    &__copyright-text {
+        padding-block: 20px;
+        padding-inline-start: 30px;
+        font-size: 12px;
+        font-family: "IBM Plex Mono";
+        text-transform: uppercase;
+
+        @media (min-width: g.$tablet-width) {
+            font-size: 16px;
+        }
+    }
+}

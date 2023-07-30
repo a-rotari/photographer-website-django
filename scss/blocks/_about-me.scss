@@ -1,0 +1,84 @@
+@use '../global/variables' as g;
+
+.about-me {
+    border: solid g.$text-primary 5px;
+    border-radius: 6%;
+    text-align: center;
+    background-color: g.$background;
+    position: relative;
+    background-color: transparent;
+    overflow: hidden;
+
+    @media (min-width: g.$desktop-width) {
+        order: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+        padding-block-start: 80px;
+        padding-block-end: 240px;
+        padding-inline: 40px;
+    }
+
+    &:hover {
+        transition: 1s ease-out;
+        transform: scale(1.03);
+
+        .about-me__background {
+            transition: 1s ease-out;
+            transform: scale(0.97);
+        }
+    }
+
+    &__background {
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        width: 110%;
+        height: 110%;
+        background-image: url('about-me-background.jpg');
+        background-size: cover;
+        background-color: g.$background;
+        background-blend-mode: overlay;
+        z-index: -1;
+    }
+
+    &__title {
+        font-size: 40px;
+        line-height: 1.2;
+        @media (min-width: g.$desktop-width) {
+            margin-block-end: 30px;
+        }
+    }
+
+    &__description {
+        font-size: 18px;
+        line-height: 1.4;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-block-end: 5px;
+    }
+
+    &__contacts {
+        @media (min-width: g.$desktop-width) {
+            display: flex;
+            justify-content: space-around;
+            column-gap: 36px;
+            margin-block-start: 80px;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        line-height: 1.4;
+    }
+
+    &__link-icon {
+        margin-inline-end: 8px;
+        width: 32px;
+        height: 32px;
+    }
+}

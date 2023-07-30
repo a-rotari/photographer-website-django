@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+
+{% block page_header %}
+  {% include './page_header.html' %}
+{% endblock page_header %}
+
+
+{% block content %}
+  {% include './gallery.html' %}
+{% endblock content %}
+
+{% block page_footer %}
+  {% include './page_footer.html' %}
+{% endblock page_footer %}
+
+
+{% block script %}
+<script src="{% static 'popup.js' %}"></script>
+<script src="{% static 'lazy-observer.js' %}"></script>
+{% comment %} <script src="{% static 'expand-rows.js' %}"></script> {% endcomment %}
+<script src="{% static 'insert-about-me.js' %}"></script>
+<script src="{% static 'toggle-navigation.js' %}"></script>
+<script src="{% static 'toggle-position-buttons.js' %}"></script>
+{% endblock script %}
+
+

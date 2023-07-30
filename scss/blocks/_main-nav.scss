@@ -1,0 +1,179 @@
+@use '../global/variables' as g;
+
+.main-nav {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-block-end: 20px;
+
+    @media (min-width: g.$tablet-width) {
+        padding-block: 50px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-block: 20px;
+
+        @media (min-width: g.$tablet-width) {
+            flex-direction: row;
+            column-gap: 20px;
+        }
+
+        @media (min-width: g.$desktop-width) {
+            column-gap: 30px;
+        }
+
+        @media (min-width: g.$desktop-large-width) {
+            column-gap: 40px;
+        }
+    }
+
+    &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // font-family: "Ysabeau SC", sans-serif;
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        line-height: 1.5;
+        font-weight: 400;
+        text-align: center;
+        text-transform: lowercase;
+        padding: 10px;
+
+        @media (min-width: g.$tablet-width) {
+            // font-size: 28px;
+            // line-height: 1.4;
+            padding: 0;
+        }
+
+        @media (min-width: g.$desktop-width) {
+            font-size: 26px;
+            line-height: 1.3;
+        }
+
+        @media (min-width: g.$desktop-large-width) {
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        &--desktop {
+            @media (max-width: g.$max-tablet-width) {
+                display: none;
+            }
+        }
+    }
+
+    &__user-items {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 20px;
+        padding-inline: 2%;
+
+        @media (min-width: g.$mobile-large-width) {
+            padding-inline: 10%;
+        }
+
+        @media (min-width: g.$tablet-width) {
+            padding: 0;
+            column-gap: 30px;
+        }
+
+        @media (min-width: g.$desktop-width) {
+            padding-inline-end:  30px;
+        }
+    }
+
+    &__user-item {
+        font-size: 11px;
+        line-height: 1.2;
+
+        @media (min-width: g.$mobile-large-width) {
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: g.$desktop-width) {
+            font-size: 16px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: g.$desktop-large-width) {
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        &--highlight {
+            display: block;
+            color: #ffffff;
+            border-radius: 5px;
+            background-color: g.$text-primary;
+            padding: 10px;
+
+            @media (min-width: g.$desktop-width) {
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 1.2;
+            }
+
+            @media (min-width: g.$desktop-large-width) {
+                font-size: 24px;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+            &:hover {
+                outline: dotted 0.3em g.$text-primary;
+                outline-style: double;
+                outline-color: rgba(g.$text-primary, 0.5);
+            }
+        }
+    }
+
+    &__switcher {
+        margin-block-start: 10px;
+        display: flex;
+        // justify-content: flex-end;
+        justify-content: flex-start;
+        // padding-inline-end: 2%;
+
+        @media (min-width: g.$tablet-width) {
+            display: none;
+        }
+    }
+
+    &__switcher-text {
+        text-transform: uppercase;
+        font-family: "Lato", sans-serif;
+        font-size: 25px;
+        line-height: 1.5;
+        margin-inline-end: 20px;
+    }
+
+    &__switcher-button {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+
+        @media (min-width: g.$tablet-width) {
+            display: none;
+        }
+
+        &--close {
+            align-self: flex-end;
+            // border: 1px solid rgba(g.$text-primary, 0.5);
+            // border-radius: 15px;
+            padding: 10px;
+        }
+    }
+}

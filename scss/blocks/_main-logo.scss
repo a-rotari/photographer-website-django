@@ -1,0 +1,42 @@
+@use '../global/variables' as g;
+
+.main-logo {
+    display: block;
+    width: 200px;
+    height: 200px;
+    // font-family: "IBM Plex Sans", sans-serif;
+    font-family: "IBM Plex Sans";
+    font-size: 37px;
+
+    path {
+        fill: transparent;
+    }
+
+    text {
+        fill: g.$text-primary;
+    }
+    // display: none;
+
+    // &:hover {
+    //     .main-logo__small-rays {
+    //         transform-origin: center;
+    //         animation-play-state: paused;
+    //         animation: logo-rotate-1 20s ease-in-out infinite;
+    //     }
+    // }
+
+
+    // @keyframes logo-rotate-1 {
+    //     0% {
+    //         transform: rotate(0deg);
+    //     }
+
+    //     50% {
+    //         transform: rotate(360deg);
+    //     }
+
+    //     100% {
+    //         transform: rotate(0deg);
+    //     }
+    // }
+}

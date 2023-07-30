@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock title %}
+
+{% block page_header %}
+  {% include 'galleries/page_header.html' %}
+{% endblock page_header %}
+
+{% block content %}
+{% endblock content %}
+
+
+{% block page_footer %}
+  {% include 'galleries/page_footer.html' %}
+{% endblock page_footer %}
+
+{% block script %}
+<script src="{% static 'toggle-navigation.js' %}"></script>
+{% endblock script %}

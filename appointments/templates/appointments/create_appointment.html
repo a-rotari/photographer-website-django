@@ -1,0 +1,74 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+
+{% block title %}Create Appointment{% endblock title %}
+{% block breadcrumbs %}
+    <nav class="breadcrumbs wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumbs__container">
+            <li class="breadcrumbs__element"><a href="{% url 'galleries:display_homepage' %}">Home &gt;&nbsp;</a></li>
+            <li class="breadcrumbs__element--final">Create Appointment</li>
+        </ol>
+    </nav>
+{% endblock breadcrumbs %}
+{% block content %}
+    <section class="calendar">
+        <form class="calendar__form" action="{% url 'appointments:create_appointment' %}" method="post">
+            <details open>
+                <summary class="calendar__month">{{ this_month_name  }}</summary>
+                <fieldset class="calendar__dates">
+                    <div class="calendar__date">Sun</div>
+                    <div class="calendar__date">Mon</div>
+                    <div class="calendar__date">Tue</div>
+                    <div class="calendar__date">Wed</div>
+                    <div class="calendar__date">Thu</div>
+                    <div class="calendar__date">Fri</div>
+                    <div class="calendar__date">Sat</div>
+
+                    {% for dummy_day in this_month_dummy_days %}
+                        <div class="calendar__date calendar__date--dummy"></div>
+                    {% endfor %}
+                    {% for day in this_month_days %}
+                        <div class="calendar__date">
+                            <input type="radio" id="date_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
+                            <label class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %}" for="date_{{ day.date.day }}">
+                                {{ day.date.day }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </details>
+            <details>
+                <summary class="calendar__month">{{ next_month_name  }}</summary>
+                <fieldset class="calendar__dates">
+                    <div class="calendar__date">Sun</div>
+                    <div class="calendar__date">Mon</div>
+                    <div class="calendar__date">Tue</div>
+                    <div class="calendar__date">Wed</div>
+                    <div class="calendar__date">Thu</div>
+                    <div class="calendar__date">Fri</div>
+                    <div class="calendar__date">Sat</div>
+
+                    {% for dummy_day in next_month_dummy_days %}
+                        <div class="calendar__date calendar__date--dummy"></div>
+                    {% endfor %}
+                    {% for day in next_month_days %}
+                        <div class="calendar__date">
+                            <input type="radio" id="date_{{day.date.month}}_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
+                            <label class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %}" for="date_{{day.date.month}}_{{ day.date.day }}">
+                                {{ day.date.day }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </details>
+            <fieldset class="calendar__appointment-fields">
+                {{ form.as_p }}
+                <p><span>Location:</span><span>Metro Vancouver</span></p>
+                <p><span>Time:</span><span>To be discussed</span></p>
+            </fieldset>
+            <input class="calendar__submit" type="submit" value="Make Appointment">
+            {% csrf_token %}
+        </form>
+    </section>
+{% endblock content %}
+

@@ -1,0 +1,91 @@
+/* Global Styles */
+@use './variables' as g;
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.wrapper {
+    // margin: 0 auto;
+    padding-inline: 15px;
+
+    @media (min-width: 1200px) {
+        padding-inline: 60px;
+    }
+}
+
+/* Intro */
+.intro {
+    text-align: center;
+}
+
+/* Upload Link */
+.uploadLink {
+    display: block;
+    margin: 25px 0;
+    width: fit-content;
+    border: 5px solid navy;
+    border-radius: 25px;
+    font-size: 36px;
+    line-height: 54px;
+    font-weight: bold;
+    padding: 30px;
+    color: navy;
+    text-decoration: none;
+}
+
+.color-highlight {
+    color: g.$accent;
+}
+
+.polka {
+    background-image: radial-gradient(rgba(#09814a, 0.1) 20%, transparent 22%),
+        radial-gradient(rgba(#2d4739, 0.1) 20%, transparent 22%);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+}
+
+.visible-desktop {
+    display: none;
+
+    @media (min-width: g.$desktop-width) {
+        display: inline;
+    }
+}
+
+ul.mobile-hidden,
+button.mobile-hidden,
+div.mobile-hidden {
+    @media (max-width: g.$max-mobile-width) {
+        display: none;
+    }
+}
+
+body.noscroll {
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+input, textarea {
+    border: 2px solid rgba(g.$text-primary, 0.7);
+    border-radius: 5px;
+}
+
+label.required_asterisk::after {
+    content: '*';
+    vertical-align: super;
+    color: g.$color-error;
+    font-size: 10px;
+}

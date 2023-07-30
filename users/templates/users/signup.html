@@ -1,0 +1,16 @@
+{% extends 'users/auth-base.html' %}
+
+{% block title %}Client Registration{% endblock title %}
+
+{% block content %}
+<section class="auth-form">
+<h1 class="auth-form__title">Client Registration</h1>
+<p class="auth-form__subtitle">Enter your email and a new password to register.</p>
+<form class="auth-form__form" method="post" action="">
+    {{ form.as_p }}
+    <input class="auth-form__form-input" type="submit" value="Register">
+    <input type="hidden" name="next" value="{{ next }}" />
+    {% csrf_token %}
+</form>
+</section>
+{% endblock content %}

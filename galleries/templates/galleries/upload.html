@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Upload photos{% endblock title %}
+{% block content %}
+  <h1>Upload photos</h1>
+  {% if submitted %}
+    <p class="success">Success!</p>
+    <a class="uploadLink" href="/">Back to the main page</a>
+  {% else %}
+    <form action="/upload/" enctype="multipart/form-data" method="post" novalidate>
+      {{ form }}
+      <input type="submit" value="Upload">
+      {% csrf_token %}
+    </form>
+  {% endif %}
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% load static %}
+<section class="gallery">
+  <h1 class="visually-hidden">Photo gallery</h1>
+  {% for photo in  photos %}
+      <picture class="gallery__photo">
+        <source
+          {% comment %} srcset="{% static 'placeholder.jpg' %}" {% endcomment %}
+          srcset="{{ photo.placeholder }}"
+          data-srcset="{{ photo.480w }}"
+          media="(max-width: 479px)"
+        />
+        <source
+          {% comment %} srcset="{% static 'placeholder.jpg' %}" {% endcomment %}
+          srcset="{{ photo.placeholder }}"
+          data-srcset="{{ photo.768w }}"
+          media="(min-width: 480px)"
+        />
+        <source
+          {% comment %} srcset="{% static 'placeholder.jpg' %}" {% endcomment %}
+          srcset="{{ photo.placeholder }}"
+          data-srcset="{{ photo.1200w }}"
+          media="(min-width: 768px)"
+        />
+        <source
+          {% comment %} srcset="{% static 'placeholder.jpg' %}" {% endcomment %}
+          srcset="{{ photo.placeholder }}"
+          data-srcset="{{ photo.1920w }}"
+          media="(min-width: 1200px)"
+        />
+        <img
+          {% comment %} src="{% static 'placeholder.jpg' %}" {% endcomment %}
+          src="{{ photo.placeholder }}"
+          draggable="false"
+          class="gallery__img"
+          loading="lazy"
+          data-src="{{ photo.1920w }}"
+          alt=""
+        />
+        {% if user.is_superuser %}
+        <form method="post" class="gallery__photo-move gallery__photo-move--up hidden">
+          {% csrf_token %}
+          <input type="hidden" name="direction" value="up">
+          <input type="hidden" name="position" value="{{ photo.position }}">
+          <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+          <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&uarr;</button>
+        </form>
+        <form method="post" class="gallery__photo-move gallery__photo-move--down hidden">
+          {% csrf_token %}
+          <input type="hidden" name="direction" value="down">
+          <input type="hidden" name="position" value="{{ photo.position }}">
+          <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+          <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&darr;</button>
+        </form>
+        {% endif %}
+      </picture>
+      <picture class="photo-popup">
+        <source
+        srcset="{{ photo.768w }}"
+        media="(max-width: 768px)"
+        />
+        <img
+        class="photo-popup__image"
+        loading="lazy"
+        src="{{ photo.1920w }}"
+        alt=""
+        />
+      </picture>
+        {% comment %} {% block about-me %}
+        {% endblock about-me %} {% endcomment %}
+  {% endfor %}
+</section>

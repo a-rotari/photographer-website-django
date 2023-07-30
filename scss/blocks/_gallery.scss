@@ -1,0 +1,33 @@
+/* Photo Gallery */
+@use '../global/variables' as g;
+
+.gallery {
+    display: block;
+    columns: 1;
+    align-items: center;
+    @media (min-width: g.$tablet-width) {
+        columns: 2;
+        column-gap: 40px;
+        margin-block-end: 40px;
+    }
+
+    @media (min-width: g.$desktop-width) {
+        columns: 3;
+    }
+
+    &__photo {
+        margin-block-end: 40px;
+        // position: relative;
+    }
+
+    &__img {
+        border-radius: 5px;
+        margin: 0 auto;
+    }
+
+    &__photo:hover {
+        cursor: pointer;
+        transition: 1s ease-out;
+        transform: scale(1.03);
+    }
+}

@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html class="page" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+      {% block title %}
+        {{ page_title|default:"Untitled Page" }}
+      {% endblock title %}
+    </title>
+    <link href="{% static 'styles.min.css' %}" rel="stylesheet" type="text/css">
+  </head>
+
+  <body class="page__body">
+    <header class="page-header">
+      {% block page_header %}
+      {% endblock page_header %}
+    </header>
+      {% block breadcrumbs %}{% endblock breadcrumbs %}
+    <main class="page-main wrapper">
+      {% block content %}
+      {% endblock content %}
+    </main>
+
+    {% block page_footer %}
+    {% endblock page_footer %}
+
+    {% block script %}
+    {% endblock script %}
+  </body>
+</html>

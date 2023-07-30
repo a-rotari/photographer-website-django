@@ -1,0 +1,16 @@
+{% extends 'users/auth-base.html' %}
+{% block title %}Client Login{% endblock title %}
+
+{% block content %}
+<section class="auth-form">
+    <h1 class="auth-form__title">Please Login</h1>
+    <form class="auth-form__form" method="post" action="{% url 'users:login' %}">
+        {{ form.as_p }}
+        <input class="auth-form__form-input" type="submit" value="Log in">
+        <p>Not registered yet? <a href="{% url 'users:signup' %}"><b>Register here.</b></a></p>
+        <p>Forgot your password? <a href="{% url 'users:password_reset' %}"><b>Click here.</b></a></p>
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% csrf_token %}
+    </form>
+</section>
+{% endblock content %}

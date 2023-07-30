@@ -1,0 +1,17 @@
+@use 'global/variables';
+@use 'global/fonts';
+@use 'global/reset';
+@use 'global/global';
+@use 'blocks/page';
+@use 'blocks/page-main';
+@use 'blocks/page-heading';
+@use 'blocks/main-nav';
+@use 'blocks/main-logo';
+@use 'blocks/gallery';
+@use 'blocks/photo-popup';
+@use 'blocks/about-me';
+@use 'blocks/page-footer';
+@use 'blocks/auth-form';
+@use 'blocks/galleries';
+@use 'blocks/calendar';
+@use 'blocks/breadcrumbs';
