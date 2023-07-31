@@ -74,7 +74,6 @@
         justify-content: space-between;
         align-items: center;
         padding-block: 20px;
-        padding-inline: 2%;
 
         @media (min-width: g.$mobile-large-width) {
             padding-inline: 10%;
@@ -140,11 +139,9 @@
     }
 
     &__switcher {
-        margin-block-start: 10px;
+        margin-block: 10px;
         display: flex;
-        // justify-content: flex-end;
-        justify-content: flex-start;
-        // padding-inline-end: 2%;
+        justify-content: center;
 
         @media (min-width: g.$tablet-width) {
             display: none;
