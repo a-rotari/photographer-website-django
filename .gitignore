@@ -9,3 +9,5 @@ media
 nginx
 static/
 !/*/static/
+*.min.css
+*.min.css.map
