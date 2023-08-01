@@ -1,8 +1,9 @@
-{% extends 'galleries/galleries_base.html' %}
+{% extends "extended_base.html" %}
 {% load static %}
 
 {% block title %}People{% endblock title %}
 
+{% block main_navigation %}{% endblock main_navigation %}
 {% block content %}
     <section class="galleries">
         {% for gallery in galleries %}
@@ -15,6 +16,3 @@
         {% endfor %}
     </section>
 {% endblock content %}
-
-
-

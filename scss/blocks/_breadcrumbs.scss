@@ -1,5 +1,23 @@
+@use 'global/variables' as g;
+
 .breadcrumbs {
-    &__container {
-        display: flex;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 10px;
+    
+    &__element:not(:last-child) > a {
+        text-decoration: underline dotted;
+        text-underline-offset: 4px;
+        text-decoration-color: rgba(g.$text-primary, 0.5);
+        text-decoration-thickness: 0.12em;
+    }
+
+    &__element:not(:last-child)::after {
+        content: "\00a0 \003e \00a0";
+    }
+
+    &__element:last-child {
+        font-weight: 700;
     }
 }

@@ -2,7 +2,7 @@ from PIL import Image
 from io import BytesIO
 import shutil
 
-
+from django.urls import reverse
 from django.core.files.uploadedfile import TemporaryUploadedFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
@@ -82,3 +82,38 @@ def prepare_galleries(galleries):
         }
         galleries_data.append(gallery_data)
     return galleries_data
+
+def prepare_breadcrumbs(*args):
+    breadcrumbs = []
+    for breadcrumb in args:
+        breadcrumbs.append(breadcrumb)
+    return breadcrumbs
+
+
+
+def get_gallery_breadcrumbs(gallery):
+    home = { 'text': 'Home',
+             'href': reverse('galleries:display_homepage')}
+    current_gallery = { 'text': gallery.name,
+                        'href': '#'}
+
+    if gallery.type == 'people':
+        people = { 'text': 'People',
+                    'href': reverse('galleries:display_people_galleries')}
+        return prepare_breadcrumbs(home, people, current_gallery)
+    elif gallery.type == 'urban' or gallery.type == 'nature':
+        return prepare_breadcrumbs(home, current_gallery)
+    elif gallery.type == 'personal':
+        personal_dashboard = { 'text': 'Personal Dashboard',
+                               'href': reverse('galleries:display_user_galleries')}
+        return prepare_breadcrumbs(home, personal_dashboard, current_gallery)
+    return []
+
+
+def get_people_breadcrumbs():
+    home = { 'text': 'Home',
+             'href': reverse('galleries:display_homepage')}
+    people = { 'text': 'People',
+              'href': '#'}
+    breadcrumbs = prepare_breadcrumbs(home, people)
+    return breadcrumbs

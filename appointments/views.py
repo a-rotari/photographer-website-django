@@ -40,9 +40,14 @@ def create_appointment(request):
                     appointment.first_name = first_name
                     appointment.last_name = last_name
                     appointment.save()
+                    breadcrumbs = [
+                        {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+                        {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
+                        {'text': 'Success!', 'href': "#"},
+                    ]
                     return render(request,
                                   'appointments/login_and_create_appointment_success.html',
-                                  {})
+                                  {'breadcrumbs': breadcrumbs})
                 else:
                     form.add_error('', 'The date you\'ve selected is already booked. Please select another date')
             else:
@@ -56,9 +61,15 @@ def create_appointment(request):
     next_month_date = today + relativedelta(months=1)
     next_month_name = next_month_date.strftime('%B')
     next_month_days, next_month_dummy_days = create_calendar(next_month_date)
+    breadcrumbs = [
+        {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+        {'text': 'Create Appointment', 'href': "#"},
+    ]
+
     return render(request,
                   'appointments/create_appointment.html',
-                  {'form': form,
+                  {'breadcrumbs': breadcrumbs,
+                   'form': form,
                    'this_month_name': this_month_name,
                    'this_month_days': this_month_days,
                    'this_month_dummy_days': this_month_dummy_days,
@@ -93,9 +104,14 @@ def login_and_create_appointment(request):
                     appointment.first_name = user.first_name
                     appointment.last_name = user.last_name
                     appointment.save()
+                    breadcrumbs = [
+                        {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+                        {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
+                        {'text': 'Success!', 'href': "#"},
+                    ]
                     return render(request,
                                   'appointments/login_and_create_appointment_success.html',
-                                  {})
+                                  {'breadcrumbs': breadcrumbs})
                 else:
                     form.add_error('', 'The date you\'ve selected is already booked. Please select another date')
             else:
@@ -107,6 +123,13 @@ def login_and_create_appointment(request):
         decoded = json.loads(urllib.parse.unquote(hidden_form_fields))
         decoded_dictionary = {key: value[0] for key, value in decoded.items()}
         form = LoginAndAppointmentRegistrationForm(initial=decoded_dictionary)
+    breadcrumbs = [
+        {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+        {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
+        {'text': 'Login to Create Appointment', 'href': "#"},
+    ]
     return render(request,
                   'appointments/login_and_create_appointment.html',
-                  {'form': form})
+                  { 'breadcrumbs': breadcrumbs,
+                    'form': form
+                  })

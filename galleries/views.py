@@ -5,7 +5,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.views.generic.edit import CreateView
 from django.db.models import Max
 
@@ -13,7 +13,7 @@ from PIL import ImageFilter
 
 from .config import optimization_subtypes
 from .forms import UploadPhotosForm
-from .helpers import get_original_image, image_resize, prepare_galleries
+from .helpers import get_original_image, image_resize, prepare_galleries, get_people_breadcrumbs, get_gallery_breadcrumbs
 from .models import Gallery, OptimizedPhoto, Photo, GalleryPhoto
 
 
@@ -28,7 +28,7 @@ def display_gallery(request, slug='homepage'):
                 name='Maria Rotari Photography',
                 description='Photoset for the main page',
             )
-            gallery.save
+            gallery.save()
         else:
             raise Gallery.DoesNotExist
     title = gallery.name
@@ -48,17 +48,20 @@ def display_gallery(request, slug='homepage'):
         template = 'galleries/homepage.html'
     else:
         template = 'galleries/galleries_base.html'
+    breadcrumbs = get_gallery_breadcrumbs(gallery)
     return render(request,
                   template,
-                  {'title': title, 'photos': photos_context})
+                  {'title': title, 'breadcrumbs': breadcrumbs, 'photos': photos_context})
 
 
 def display_people_galleries(request):
+    breadcrumbs = get_people_breadcrumbs()
     galleries = Gallery.objects.filter(type='people')
     galleries_data = prepare_galleries(galleries)
     return render(request,
                   'galleries/people_display.html',
-                  {'galleries': galleries_data})
+                  { 'breadcrumbs': breadcrumbs,
+                    'galleries': galleries_data})
 
 
 def display_user_galleries(request):

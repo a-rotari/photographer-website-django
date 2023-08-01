@@ -2,14 +2,9 @@
 {% load static %}
 
 {% block title %}Create Appointment{% endblock title %}
-{% block breadcrumbs %}
-    <nav class="breadcrumbs wrapper" aria-label="breadcrumb">
-        <ol class="breadcrumbs__container">
-            <li class="breadcrumbs__element"><a href="{% url 'galleries:display_homepage' %}">Home &gt;&nbsp;</a></li>
-            <li class="breadcrumbs__element--final">Create Appointment</li>
-        </ol>
-    </nav>
-{% endblock breadcrumbs %}
+
+{% block main_navigation %}{% endblock main_navigation %}
+
 {% block content %}
     <section class="calendar">
         <form class="calendar__form" action="{% url 'appointments:create_appointment' %}" method="post">

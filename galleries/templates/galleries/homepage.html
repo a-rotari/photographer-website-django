@@ -1,6 +1,13 @@
-{% extends './galleries_base.html' %}
+{% extends 'extended_base.html' %}
 {% load static %}
 
 {% block content %}
-    {% include './gallery_homepage.html' %}
+  {% include './gallery.html' %}
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'popup.js' %}"></script>
+<script src="{% static 'lazy-observer.js' %}"></script>
+<script src="{% static 'toggle-navigation.js' %}"></script>
+<script src="{% static 'toggle-position-buttons.js' %}"></script>
+{% endblock script %}
