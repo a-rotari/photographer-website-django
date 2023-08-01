@@ -72,7 +72,7 @@ def display_user_galleries(request):
             request, "galleries/people_display.html",
             {"galleries": galleries_data}
         )
-    return HttpResponseRedirect(reverse('display_homepage'))
+    return HttpResponseRedirect(reverse('galleries:display_homepage'))
 
 
 def modify_position(request):
@@ -101,6 +101,8 @@ def modify_position(request):
 
 
 def upload(request):
+    if (not request.user.is_authenticated) or (not request.user.is_staff):
+        return HttpResponseRedirect(reverse('galleries:display_homepage'))
     submitted = False
     if request.method == 'POST':
         form = UploadPhotosForm(request.POST, request.FILES)
