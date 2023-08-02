@@ -95,7 +95,7 @@ def get_gallery_breadcrumbs(gallery):
     home = { 'text': 'Home',
              'href': reverse('galleries:display_homepage')}
     current_gallery = { 'text': gallery.name,
-                        'href': '#'}
+                        'href': ''}
 
     if gallery.type == 'people':
         people = { 'text': 'People',
@@ -114,6 +114,6 @@ def get_people_breadcrumbs():
     home = { 'text': 'Home',
              'href': reverse('galleries:display_homepage')}
     people = { 'text': 'People',
-              'href': '#'}
+              'href': ''}
     breadcrumbs = prepare_breadcrumbs(home, people)
     return breadcrumbs

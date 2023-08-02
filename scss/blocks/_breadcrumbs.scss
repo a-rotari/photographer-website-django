@@ -5,7 +5,23 @@
     flex-wrap: wrap;
     align-items: center;
     row-gap: 10px;
+
+    @media (min-width: g.$tablet-width) {
+        font-size: 14px;
+    }
+
+    @media (min-width: g.$desktop-width) {
+        font-size: 16px;
+    }
+
+    @media (min-width: g.$desktop-large-width) {
+        font-size: 18px;
+    }
     
+    &__element:last-child > a:hover {
+        text-decoration: none;
+    }
+
     &__element:not(:last-child) > a {
         text-decoration: underline dotted;
         text-underline-offset: 4px;
@@ -19,5 +35,6 @@
 
     &__element:last-child {
         font-weight: 700;
+        cursor: default;
     }
 }
