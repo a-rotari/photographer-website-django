@@ -71,24 +71,18 @@
         {% endblock main_navigation %}
         {% block user_navigation %}
           <ul class="main-nav__user-items">
-            {% if user.is_authenticated %}
-              <li class="main-nav__user-item">
-                <a href="{% url 'galleries:display_user_galleries' %}">Personal Page</a>
-              </li>
-            {% endif %}
             {% if user.is_superuser %}
               <li class="main-nav__user-item">
                 <button id="toggle-position">Toggle position buttons</button>
               </li>
             {% else %}
               <li class="main-nav__user-item main-nav__user-item--highlight">
-                <a href="{% url 'appointments:create_appointment' %}">Get your FREE session</a>
+                <a href="{% url 'appointments:create_appointment' %}"><span class="mobile-hidden">Get your </span>FREE session</a>
               </li>
             {% endif %}
             <li class="main-nav__user-item">
               {% if user.is_authenticated %}
-                Hello, {{ user.first_name }}
-                /
+                <a class="button-link" href="{% url 'galleries:client_area' %}">Client Area</a>
                 <form method="post">
                   {% csrf_token %}
                   <button formaction="{% url 'users:logout' %}" formmethod="post" type="submit">Log out</button>

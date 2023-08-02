@@ -15,7 +15,6 @@
 }
 
 .wrapper {
-    // margin: 0 auto;
     padding-inline: 15px;
 
     @media (min-width: 1200px) {
@@ -64,7 +63,8 @@
 
 ul.mobile-hidden,
 button.mobile-hidden,
-div.mobile-hidden {
+div.mobile-hidden,
+span.mobile-hidden {
     @media (max-width: g.$max-mobile-width) {
         display: none;
     }
@@ -78,9 +78,37 @@ body.noscroll {
     display: none;
 }
 
-input, textarea {
+%button-style {
     border: 2px solid rgba(g.$text-primary, 0.7);
     border-radius: 5px;
+    font-weight: 700;
+    background-color: inherit;
+    color: g.$text-primary;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+input, textarea, button {
+    @extend %button-style;
+}
+
+a.button-link {
+    @extend %button-style;
+    padding: 10px;
+}
+
+input[type="submit"], button {
+    font-weight: 700;
+    padding: 10px;
+}
+
+input[type="submit"]:hover, button:hover, a.button-link:hover {
+    text-decoration: none;
+    background-color: rgba(g.$text-primary, 0.8);
+    color: #fff;
+}
+
+input, textarea {
+    font-weight: 400;
 }
 
 label.required_asterisk::after {

@@ -81,10 +81,11 @@
 
         @media (min-width: g.$tablet-width) {
             padding: 0;
-            column-gap: 30px;
+            column-gap: 10px;
         }
 
         @media (min-width: g.$desktop-width) {
+            column-gap: 30px;
             padding-inline-end:  30px;
         }
     }
@@ -92,6 +93,9 @@
     &__user-item {
         font-size: 11px;
         line-height: 1.2;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
 
         @media (min-width: g.$mobile-large-width) {
             font-size: 14px;
@@ -111,6 +115,7 @@
         &--highlight {
             display: block;
             color: #ffffff;
+            border: 2px solid rgba(g.$text-primary, 0.7);
             border-radius: 5px;
             background-color: g.$text-primary;
             padding: 10px;
