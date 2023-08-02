@@ -8,7 +8,7 @@
 {% block content %}
     <section class="calendar">
         <form class="calendar__form" action="{% url 'appointments:create_appointment' %}" method="post">
-            <details open>
+            <details class="calendar__month-wrapper" open>
                 <summary class="calendar__month">{{ this_month_name  }}</summary>
                 <fieldset class="calendar__dates">
                     <div class="calendar__date">Sun</div>
@@ -32,7 +32,7 @@
                     {% endfor %}
                 </fieldset>
             </details>
-            <details>
+            <details class="calendar__month-wrapper">
                 <summary class="calendar__month">{{ next_month_name  }}</summary>
                 <fieldset class="calendar__dates">
                     <div class="calendar__date">Sun</div>
@@ -61,7 +61,7 @@
                 <p><span>Location:</span><span>Metro Vancouver</span></p>
                 <p><span>Time:</span><span>To be discussed</span></p>
             </fieldset>
-            <input class="calendar__submit" type="submit" value="Make Appointment">
+            <input class="calendar__submit" type="submit" value="Create Appointment">
             {% csrf_token %}
         </form>
     </section>
