@@ -105,7 +105,7 @@ def get_gallery_breadcrumbs(gallery):
         return prepare_breadcrumbs(home, current_gallery)
     elif gallery.type == 'personal':
         personal_dashboard = { 'text': 'Personal Dashboard',
-                               'href': reverse('galleries:display_user_galleries')}
+                               'href': reverse('galleries:client_area')}
         return prepare_breadcrumbs(home, personal_dashboard, current_gallery)
     return []
 

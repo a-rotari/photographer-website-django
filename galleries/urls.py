@@ -6,7 +6,7 @@ app_name = 'galleries'
 urlpatterns = [
     path('personal/',
          views.display_user_galleries,
-         name='display_user_galleries'),
+         name='client_area'),
     path('people/',
          views.display_people_galleries,
          name='display_people_galleries'),

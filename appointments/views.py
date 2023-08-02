@@ -12,7 +12,7 @@ import json
 
 def create_appointment(request):
     if request.user.is_authenticated:
-        return redirect(reverse('galleries:display_user_galleries'))
+        return redirect(reverse('galleries:client_area'))
     if request.method == 'POST':
         form = AppointmentRegistrationForm(request.POST)
         if form.is_valid():

@@ -26,7 +26,7 @@
         {% block breadcrumbs %}
           <ol class="breadcrumbs">
               {% for breadcrumb in breadcrumbs %}
-                  <li class="breadcrumbs__element"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                  <li class="breadcrumbs__element"><a {% if breadcrumb.href %}href="{{ breadcrumb.href }}"{% endif %}>{{ breadcrumb.text }}</a></li>
               {% endfor %}
           </ol>
         {% endblock breadcrumbs %}
