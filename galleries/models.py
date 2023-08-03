@@ -10,6 +10,7 @@ class Gallery(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     type = models.SlugField(blank=True)
     name = models.CharField(max_length=255)
+    displayed_date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
