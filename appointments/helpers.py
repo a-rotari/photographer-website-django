@@ -16,13 +16,3 @@ def create_calendar(reference_date):
             dummy_days.append('dummy_day')
     return days, dummy_days
 
-# def create_appointment_instance(request, selected_date_string):
-#     if request.user.is_authenticated:
-#         selected_date = datetime.strptime(selected_date_string, '%Y_%m_%d').date()
-#         appointment = Day.objects.get(date=selected_date)
-#         if not appointment.busy:
-#             appointment.busy = True
-#             appointment.email = request.user.email
-#             appointment.client = request.user
-#             appointment.save()
-#     else
