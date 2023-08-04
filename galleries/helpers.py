@@ -1,6 +1,8 @@
 from PIL import Image
 from io import BytesIO
 import shutil
+import uuid
+import os
 
 from django.urls import reverse
 from django.core.files.uploadedfile import TemporaryUploadedFile
@@ -75,10 +77,15 @@ def prepare_galleries(galleries):
             .optimizedphoto_set.get(image_subtype='480w')
             .image.url
         )
+        gallery_archive = gallery.galleryarchive_set.first()
+        archive_url = gallery_archive.archive_url.url if gallery_archive else ''
+
         gallery_data = {
             'thumbnail': thumbnail_url,
             'slug': gallery.slug,
-            'title': gallery.name
+            'title': gallery.name,
+            'displayed_date': gallery.displayed_date,
+            'archive_url': archive_url
         }
         galleries_data.append(gallery_data)
     return galleries_data
@@ -104,7 +111,7 @@ def get_gallery_breadcrumbs(gallery):
     elif gallery.type == 'urban' or gallery.type == 'nature':
         return prepare_breadcrumbs(home, current_gallery)
     elif gallery.type == 'personal':
-        personal_dashboard = { 'text': 'Personal Dashboard',
+        personal_dashboard = { 'text': 'Client Area',
                                'href': reverse('galleries:client_area')}
         return prepare_breadcrumbs(home, personal_dashboard, current_gallery)
     return []
@@ -117,3 +124,16 @@ def get_people_breadcrumbs():
               'href': ''}
     breadcrumbs = prepare_breadcrumbs(home, people)
     return breadcrumbs
+
+def get_client_area_breadcrumbs():
+    home = { 'text': 'Home',
+             'href': reverse('galleries:display_homepage')}
+    client_area = { 'text': 'Client Area',
+              'href': ''}
+    breadcrumbs = prepare_breadcrumbs(home, client_area)
+    return breadcrumbs
+
+def get_gallery_archive_upload_path(instance, filename):
+    # Generate a unique filename using a UUID
+    filename, ext = os.path.splitext(filename)
+    return f'{uuid.uuid4()}{ext}'

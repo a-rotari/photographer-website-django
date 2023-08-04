@@ -94,6 +94,16 @@ input, textarea, button {
 a.button-link {
     @extend %button-style;
     padding: 10px;
+    display: block;
+
+    &--margin {
+        margin: 20px auto;
+    }
+
+    &--centered {
+        width: fit-content;
+        margin-inline: auto;
+    }
 }
 
 input[type="submit"], button {

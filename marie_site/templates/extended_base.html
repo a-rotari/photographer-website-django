@@ -70,23 +70,30 @@
           </div>
         {% endblock main_navigation %}
         {% block user_navigation %}
-          <ul class="main-nav__user-items">
-            {% if user.is_superuser %}
-              <li class="main-nav__user-item">
-                <button id="toggle-position">Toggle position buttons</button>
-              </li>
-            {% else %}
+        <ul class="main-nav__user-items">
+            {% block toggle_position %}
+              {% if user.is_superuser %}
+                <li class="main-nav__user-item">
+                  <button id="toggle-position">Toggle position buttons</button>
+                </li>
+              {% endif %}
+            {% endblock toggle_position %}
+            {% block create_appointment %}
               <li class="main-nav__user-item main-nav__user-item--highlight">
                 <a href="{% url 'appointments:create_appointment' %}"><span class="mobile-hidden">Get your </span>FREE session</a>
               </li>
-            {% endif %}
+            {% endblock create_appointment %}
             <li class="main-nav__user-item">
               {% if user.is_authenticated %}
-                <a class="button-link" href="{% url 'galleries:client_area' %}">Client Area</a>
-                <form method="post">
-                  {% csrf_token %}
-                  <button formaction="{% url 'users:logout' %}" formmethod="post" type="submit">Log out</button>
-                </form>
+                {% block client_area %}
+                  <a class="button-link" href="{% url 'galleries:client_area' %}">Client Area</a>
+                {% endblock client_area %}
+                {% block logout %}
+                  <form method="post">
+                    {% csrf_token %}
+                    <button formaction="{% url 'users:logout' %}" formmethod="post" type="submit">Log out</button>
+                  </form>
+                {% endblock logout %}
               {% else %}
                 <a href="{% url 'users:login' %}">Log in</a> / <a href="{% url 'users:signup' %}">Register</a>
               {% endif %}

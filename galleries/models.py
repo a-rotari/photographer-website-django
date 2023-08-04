@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from .helpers import get_gallery_archive_upload_path
 
 User = get_user_model()
 
@@ -56,3 +57,10 @@ class OptimizedPhoto(models.Model):
         Photo,
         on_delete=models.CASCADE,
     )
+
+
+class GalleryArchive(models.Model):
+    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    archive_url = models.FileField(upload_to=get_gallery_archive_upload_path)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    name = models.SlugField(blank=True)

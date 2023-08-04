@@ -1,0 +1,80 @@
+{% extends "extended_base.html" %}
+{% load static %}
+
+{% block title %}Client Area{% endblock title %}
+
+{% block main_navigation %}{% endblock main_navigation %}
+
+{% block toggle_position %}{% endblock toggle_position %}
+
+{% block client_area %}{% endblock client_area %}
+
+{% block content %}
+    <section class="galleries">
+        <h2 class="galleries__section-title">
+            {% if galleries %}Your galleries:{% else %}You don't have any galleries yet.{% endif %}
+        </h2>
+        <div class="galleries__wrapper">
+        {% for gallery in galleries %}
+            <div class="galleries__gallery-wrapper">
+                <a class="galleries__image-link" href="{% url 'galleries:display_gallery' gallery.slug %}">
+                    <img class="galleries__image" src="{{ gallery.thumbnail }}" alt="Gallery thumbnail" />
+                </a>
+                <a class="galleries__title-link" href="{% url 'galleries:display_gallery' gallery.slug %}">{{ gallery.title }}</a>
+                <p class="galleries__displayed-date">{{ gallery.displayed_date }}</p>
+                <p class="galleries__displayed-date"><a href="{{ gallery.archive_url }}" download="{{ gallery.title }}">Download</a></p>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+    <section class="calendar">
+        <h2 class="calendar__section-title">Calendar of Appointments</h2>
+        <details class="calendar__month-wrapper">
+            <summary class="calendar__month">{{ this_month_name  }}</summary>
+            <div class="calendar__dates">
+                <div class="calendar__date">Sun</div>
+                <div class="calendar__date">Mon</div>
+                <div class="calendar__date">Tue</div>
+                <div class="calendar__date">Wed</div>
+                <div class="calendar__date">Thu</div>
+                <div class="calendar__date">Fri</div>
+                <div class="calendar__date">Sat</div>
+
+                {% for dummy_day in this_month_dummy_days %}
+                    <div class="calendar__date calendar__date--dummy"></div>
+                {% endfor %}
+                {% for day in this_month_days %}
+                    <div class="calendar__date">
+                        <p class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %} {% if day in appointment_days %}calendar__date-label--user-appointment{% endif %}">
+                            {{ day.date.day }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </details>
+        <details class="calendar__month-wrapper">
+            <summary class="calendar__month">{{ next_month_name  }}</summary>
+            <div class="calendar__dates">
+                <div class="calendar__date">Sun</div>
+                <div class="calendar__date">Mon</div>
+                <div class="calendar__date">Tue</div>
+                <div class="calendar__date">Wed</div>
+                <div class="calendar__date">Thu</div>
+                <div class="calendar__date">Fri</div>
+                <div class="calendar__date">Sat</div>
+
+                {% for dummy_day in next_month_dummy_days %}
+                    <div class="calendar__date calendar__date--dummy"></div>
+                {% endfor %}
+                {% for day in next_month_days %}
+                    <div class="calendar__date">
+                        <p class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %} {% if day in appointment_days %}calendar__date-label--user-appointment{% endif %}">
+                            {{ day.date.day }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </details>
+        <a class="button-link button-link--margin button-link--centered" href="{% url 'appointments:create_appointment' %}">Create an appointment</a>
+    </section>
+{% endblock content %}

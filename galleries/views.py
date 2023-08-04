@@ -8,12 +8,18 @@ from django.shortcuts import render
 from django.urls import reverse, resolve
 from django.views.generic.edit import CreateView
 from django.db.models import Max
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
+
+
 
 from PIL import ImageFilter
 
 from .config import optimization_subtypes
 from .forms import UploadPhotosForm
-from .helpers import get_original_image, image_resize, prepare_galleries, get_people_breadcrumbs, get_gallery_breadcrumbs
+from .helpers import get_original_image, image_resize, prepare_galleries, get_people_breadcrumbs, get_gallery_breadcrumbs, get_client_area_breadcrumbs
+from appointments.helpers import create_calendar
+from appointments.models import Day
 from .models import Gallery, OptimizedPhoto, Photo, GalleryPhoto
 
 
@@ -64,15 +70,35 @@ def display_people_galleries(request):
                     'galleries': galleries_data})
 
 
-def display_user_galleries(request):
-    if request.user.is_authenticated:
-        galleries = request.user.galleries.all()
-        galleries_data = prepare_galleries(galleries)
-        return render(
-            request, "galleries/people_display.html",
-            {"galleries": galleries_data}
-        )
-    return HttpResponseRedirect(reverse('galleries:display_homepage'))
+def display_client_area(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('galleries:display_homepage'))
+
+    today = date.today()
+    this_month_name = today.strftime('%B')
+    this_month_days, this_month_dummy_days = create_calendar(today)
+    appointment_days = Day.objects.filter(client=request.user)
+    next_month_date = today + relativedelta(months=1)
+    next_month_name = next_month_date.strftime('%B')
+    next_month_days, next_month_dummy_days = create_calendar(next_month_date)
+
+    breadcrumbs = get_client_area_breadcrumbs()
+
+    galleries = request.user.galleries.all()
+    galleries_data = prepare_galleries(galleries)
+    print(type(this_month_days), type(appointment_days))
+    return render(
+        request, "galleries/client_area.html",
+        { 'breadcrumbs': breadcrumbs,
+            'galleries': galleries_data,
+            'this_month_name': this_month_name,
+            'this_month_days': this_month_days,
+            'this_month_dummy_days': this_month_dummy_days,
+            'next_month_name': next_month_name,
+            'next_month_days': next_month_days,
+            'next_month_dummy_days': next_month_dummy_days,
+            'appointment_days': appointment_days})
+
 
 
 def modify_position(request):

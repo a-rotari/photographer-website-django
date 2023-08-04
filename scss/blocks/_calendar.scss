@@ -3,6 +3,12 @@
 .calendar {
     margin-block-end: 20px;
 
+    &__section-title {
+        margin-block-start: 36px;
+        margin-block-end: 20px;
+        text-align: center;
+    }
+
     &__form .errorlist {
         color: g.$color-error;
         margin-block-end: 20px;
@@ -52,7 +58,7 @@
     &__date {
         width: 30px;
         height: 30px;
-        
+
         @media (min-width: g.$tablet-width) {
             width: 46px;
             height: 46px;
@@ -81,6 +87,11 @@
 
         &--busy {
             background-color: rgba(g.$text-primary, 0.3);
+            color: #fff;
+        }
+
+        &--user-appointment {
+            background-color: rgba(g.$accent, 0.3);
             color: #fff;
         }
     }
@@ -139,7 +150,7 @@
         @media (min-width: g.$tablet-width) {
             width: 500px;
         }
-        
+
         @media (min-width: g.$desktop-width) {
             width: 650px;
         }

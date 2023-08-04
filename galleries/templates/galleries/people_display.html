@@ -7,7 +7,7 @@
 {% block content %}
     <section class="galleries">
         {% for gallery in galleries %}
-            <div class="galleries__wrapper">
+            <div class="galleries__gallery-wrapper">
                 <a class="galleries__image-link" href="{% url 'galleries:display_gallery' gallery.slug %}">
                     <img class="galleries__image" src="{{ gallery.thumbnail }}" alt="Gallery thumbnail" />
                 </a>

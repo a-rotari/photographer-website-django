@@ -5,7 +5,7 @@ app_name = 'galleries'
 
 urlpatterns = [
     path('personal/',
-         views.display_user_galleries,
+         views.display_client_area,
          name='client_area'),
     path('people/',
          views.display_people_galleries,

@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
-from .models import Gallery, Photo, OptimizedPhoto
+from .models import Gallery, Photo, OptimizedPhoto, GalleryArchive
 
 # class PhotoAdmin(admin.ModelAdmin):
 #     def delete_queryset(self, request, queryset):
@@ -24,5 +24,6 @@ from .models import Gallery, Photo, OptimizedPhoto
 admin.site.register(Gallery)
 admin.site.register(Photo)
 admin.site.register(OptimizedPhoto)
+admin.site.register(GalleryArchive)
 # admin.site.register(Photo, PhotoAdmin)
 # admin.site.register(OptimizedPhoto, OptimizedPhotoAdmin)

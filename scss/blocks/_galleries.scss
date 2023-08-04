@@ -5,24 +5,37 @@
 
     @media (min-width: g.$tablet-width) {
         display: flex;
-        flex-wrap: wrap;
-        // justify-content: space-evenly;
+        flex-direction: column;
+    }
+
+    &__section-title {
+        margin-block-end: 36px;
+        text-align: center;
     }
 
     &__wrapper {
         display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        @media (min-width: g.$tablet-width) {
+            flex-direction: row;
+        }
+    }
+
+    &__gallery-wrapper {
+        display: flex;
         flex-direction: column;
         margin-block-end: 36px;
         align-items: center;
+        margin-inline: auto;
 
         @media (min-width: g.$tablet-width) {
             width: 50%;
-            margin-block-end: 70px;
         }
 
         @media (min-width: g.$desktop-width) {
             width: 33%;
-            margin-block-end: 70px;
         }
     }
 
@@ -36,8 +49,6 @@
     }
 
     &__image {
-        // width: 70%;
-        // border-radius: 20px;
         margin: 0 auto;
         width: 200px;
         height: 200px;
@@ -57,9 +68,7 @@
     }
 
     &__title-link {
-        // font-family: "Playfair Display", serif;
         font-size: 22px;
-        // text-transform: uppercase;
 
         @media (min-width: g.$tablet-width) {
             font-size: 28px;
