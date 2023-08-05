@@ -48,7 +48,7 @@
                     {% endfor %}
                     {% for day in next_month_days %}
                         <div class="calendar__date">
-                            <input type="radio" id="date_{{day.date.month}}_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
+                            <input type="radio" id="date_{{ day.date.month }}_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
                             <label class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %}" for="date_{{day.date.month}}_{{ day.date.day }}">
                                 {{ day.date.day }}
                             </label>
@@ -57,6 +57,11 @@
                 </fieldset>
             </details>
             <fieldset class="calendar__appointment-fields">
+                {% if user.is_authenticated  %}
+                    <p><span>Name:</span><span>{{ user.first_name }} {{ user.last_name }}</span></p>
+                    <p><span>Email:</span><span>{{ user.email }}</span></p>
+                    <p><span>Phone:</span><span>{{ user.phone }}</span></p>
+                {% endif %}
                 {{ form.as_p }}
                 <p><span>Location:</span><span>Metro Vancouver</span></p>
                 <p><span>Time:</span><span>To be discussed</span></p>

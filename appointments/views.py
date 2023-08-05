@@ -5,55 +5,88 @@ from dateutil.relativedelta import relativedelta
 from datetime import datetime, date
 from .helpers import create_calendar
 from .models import Day, User
-from .forms import AppointmentRegistrationForm, LoginAndAppointmentRegistrationForm
+from .forms import AppointmentRegistrationForm, AppointmentMessageForm, LoginAndAppointmentRegistrationForm
 import urllib.parse
 import json
 
 
 def create_appointment(request):
     if request.user.is_authenticated:
-        return redirect(reverse('galleries:client_area'))
-    if request.method == 'POST':
-        form = AppointmentRegistrationForm(request.POST)
-        if form.is_valid():
-            selected_date_string = request.POST.get('selected_date')
-            if selected_date_string:
-                email = request.POST.get('email')
-                if (not request.user.is_authenticated) and User.objects.filter(email=email).exists():
-                    hidden_form_data = dict(request.POST)
-                    if 'csrfmiddlewaretoken' in hidden_form_data: del hidden_form_data['csrfmiddlewaretoken']
-                    json_encoded_data = urllib.parse.quote(json.dumps(hidden_form_data))
-                    return redirect(reverse('appointments:login_and_create_appointment') + f'?data={json_encoded_data}')
-
-                selected_date = datetime.strptime(selected_date_string, '%Y_%m_%d').date()
-                appointment = Day.objects.get(date=selected_date)
-                first_name = request.POST.get('first_name')
-                last_name = request.POST.get('last_name')
-                message = request.POST.get('message')
-                phone = request.POST.get('phone')
-                if not appointment.busy:
-                    appointment.busy = True
-                    appointment.client = None
-                    appointment.email = email
-                    appointment.message = message
-                    appointment.phone = phone
-                    appointment.first_name = first_name
-                    appointment.last_name = last_name
-                    appointment.save()
-                    breadcrumbs = [
-                        {'text': 'Home', 'href': reverse('galleries:display_homepage')},
-                        {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
-                        {'text': 'Success!', 'href': "#"},
-                    ]
-                    return render(request,
-                                  'appointments/login_and_create_appointment_success.html',
-                                  {'breadcrumbs': breadcrumbs})
+        if request.method == 'POST':
+            form = AppointmentMessageForm(request.POST)
+            if form.is_valid():
+                selected_date_string = request.POST.get('selected_date')
+                if selected_date_string:
+                    selected_date = datetime.strptime(selected_date_string, '%Y_%m_%d').date()
+                    appointment = Day.objects.get(date=selected_date)
+                    first_name = request.user.first_name
+                    last_name = request.user.last_name
+                    message = request.POST.get('message')
+                    phone = request.user.phone
+                    email = request.user.email
+                    if not appointment.busy:
+                        appointment.busy = True
+                        appointment.client = request.user
+                        appointment.email = email
+                        appointment.message = message
+                        appointment.phone = phone
+                        appointment.first_name = first_name
+                        appointment.last_name = last_name
+                        appointment.save()
+                        breadcrumbs = [
+                            {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+                            {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
+                            {'text': 'Success!', 'href': "#"},
+                        ]
+                        return render(request,
+                                    'appointments/login_and_create_appointment_success.html',
+                                    {'breadcrumbs': breadcrumbs})
                 else:
-                    form.add_error('', 'The date you\'ve selected is already booked. Please select another date')
-            else:
-                form.add_error('', 'Please select the date for your appointment')
+                    form.add_error('', 'Please select the date for your appointment')
+        else:
+            form = AppointmentMessageForm()
     else:
-        form = AppointmentRegistrationForm()
+        if request.method == 'POST':
+            form = AppointmentRegistrationForm(request.POST)
+            if form.is_valid():
+                selected_date_string = request.POST.get('selected_date')
+                if selected_date_string:
+                    email = request.POST.get('email')
+                    if (not request.user.is_authenticated) and User.objects.filter(email=email).exists():
+                        hidden_form_data = dict(request.POST)
+                        if 'csrfmiddlewaretoken' in hidden_form_data: del hidden_form_data['csrfmiddlewaretoken']
+                        json_encoded_data = urllib.parse.quote(json.dumps(hidden_form_data))
+                        return redirect(reverse('appointments:login_and_create_appointment') + f'?data={json_encoded_data}')
+
+                    selected_date = datetime.strptime(selected_date_string, '%Y_%m_%d').date()
+                    appointment = Day.objects.get(date=selected_date)
+                    first_name = request.POST.get('first_name')
+                    last_name = request.POST.get('last_name')
+                    message = request.POST.get('message')
+                    phone = request.POST.get('phone')
+                    if not appointment.busy:
+                        appointment.busy = True
+                        appointment.client = None
+                        appointment.email = email
+                        appointment.message = message
+                        appointment.phone = phone
+                        appointment.first_name = first_name
+                        appointment.last_name = last_name
+                        appointment.save()
+                        breadcrumbs = [
+                            {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+                            {'text': 'Create Appointment', 'href': reverse("appointments:create_appointment")},
+                            {'text': 'Success!', 'href': "#"},
+                        ]
+                        return render(request,
+                                    'appointments/login_and_create_appointment_success.html',
+                                    {'breadcrumbs': breadcrumbs})
+                    else:
+                        form.add_error('', 'The date you\'ve selected is already booked. Please select another date')
+                else:
+                    form.add_error('', 'Please select the date for your appointment')
+        else:
+            form = AppointmentRegistrationForm()
 
     today = date.today()
     this_month_name = today.strftime('%B')

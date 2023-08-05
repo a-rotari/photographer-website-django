@@ -13,6 +13,12 @@ class AppointmentRegistrationForm(forms.Form):
         required=False
     )
 
+class AppointmentMessageForm(forms.Form):
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'maxlength': 1800}),
+        required=False
+    )
+
 
 class LoginAndAppointmentRegistrationForm(AppointmentRegistrationForm):
     selected_date = forms.CharField(widget=forms.HiddenInput(), required=False)
