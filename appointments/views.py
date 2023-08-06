@@ -8,6 +8,8 @@ from .models import Day, User
 from .forms import AppointmentRegistrationForm, AppointmentMessageForm, LoginAndAppointmentRegistrationForm
 import urllib.parse
 import json
+from django.http import HttpResponseRedirect
+
 
 
 def create_appointment(request):
@@ -166,3 +168,41 @@ def login_and_create_appointment(request):
                   { 'breadcrumbs': breadcrumbs,
                     'form': form
                   })
+
+
+def delete_appointment(request):
+    success = False
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('galleries:client_area'))
+    breadcrumbs = [
+                {'text': 'Home', 'href': reverse('galleries:display_homepage')},
+                {'text': 'Client Area', 'href': reverse("galleries:client_area")},
+            ]
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        appointment_day = Day.objects.filter(id=id, client=request.user).first()
+        if (not id) or (not appointment_day):
+            return HttpResponseRedirect(reverse('galleries:client_area'))
+        appointment_day.email = ''
+        appointment_day.first_name = None
+        appointment_day.last_name = None
+        appointment_day.message = None
+        appointment_day.phone = None
+        appointment_day.client = None
+        appointment_day.busy = False
+        appointment_day.save()
+        breadcrumbs.append({'text': 'Appointment Cancelled!', 'href': '#'})
+        success = True
+    else:
+        id = request.GET.get('id')
+        try:
+            appointment_day = Day.objects.get(id=id, client=request.user)
+        except Day.DoesNotExist:
+            return HttpResponseRedirect(reverse('galleries:client_area'))
+        breadcrumbs.append({'text': 'Cancel Appointment', 'href': "#"})
+    return render(request,
+                  'appointments/delete_appointment.html',
+                  {'breadcrumbs': breadcrumbs,
+                   'success': success,
+                   'appointment_day': appointment_day}
+                )

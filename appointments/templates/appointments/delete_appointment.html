@@ -1,0 +1,27 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+
+{% block title %}Cancel Appointment{% endblock title %}
+
+{% block main_navigation %}{% endblock main_navigation %}
+
+{% block content %}
+{% if success %}
+<section class="auth-form">
+    <h1 class="auth-form__title">Appointment cancelled</h1>
+    <p class="auth-form__subtitle">You appointment of {{ appointment_day.date }} has been sucessfully cancelled!</p>
+    <a class="button-link button-link--margin-block" href="{% url 'galleries:client_area' %}">Go back to Client Area</a>
+</section>
+{% else %}
+<section class="auth-form">
+    <h1 class="auth-form__title">Cancel your appointment</h1>
+    <p class="auth-form__subtitle">Please confirm that you want to cancel your appointment of {{ appointment_day.date }}</p>
+    <form method="post"  action="{% url 'appointments:delete_appointment' %}">
+        {% csrf_token %}
+        <input type="hidden" value="{{ appointment_day.id }}" name="id">
+        <input class="auth-form__form-input auth-form__form-input--inline" type="submit" value="Cancel the Appointment">
+        <a class="button-link button-link--inline auth-form__form-input auth-form__form-input--inline auth-form__form-input--left-margin" href="{% url 'galleries:client_area' %}">Go back to Client Area</a>
+    </form>
+</section>
+{% endif %}
+{% endblock content %}

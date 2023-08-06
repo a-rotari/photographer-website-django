@@ -1,0 +1,45 @@
+@use '../global/variables' as g;
+
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+        margin-block: 20px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        width: 280px;
+
+        @media (min-width: g.$mobile-large-width) {
+            width: 360px; 
+            padding-inline: 40px;
+        }
+
+        @media (min-width: g.$tablet-width) {
+            padding-inline: 40px;
+            width: 480px;
+        }
+    }
+
+    &__list-item {
+        font-size: 16px;
+        display: flex;
+        margin-block-end: 10px;
+
+        @media (min-width: g.$tablet-width) {
+            font-size: 18px;
+        }
+        
+        @media (min-width: g.$tablet-width) {
+            font-size: 21px;
+        }
+    }
+
+    &__list-item-link {
+        margin-inline-start: auto;
+    }
+}

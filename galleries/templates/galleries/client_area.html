@@ -27,6 +27,22 @@
         {% endfor %}
         </div>
     </section>
+    <section class="appointments-list">
+        <h2 class="appointments-list__title">
+            {% if appointment_days %}Your appointments:{% else %}You don't have any appointments yet.{% endif %}
+        </h2>
+        {% if appointment_days %}
+            <ul class="appointments-list__list">
+                {% for appointment_day in appointment_days %}
+                    <li class="appointments-list__list-item">
+                        <p class="appointments-list__list-item-text">{{ appointment_day.date }}</p>
+                        {% comment %} <a class="button-link button-link--margin button-link--centered" href="{% url 'appointments:create_appointment' %}">Create an appointment</a> {% endcomment %}
+                        <a class="appointments-list__list-item-link button-link button-link--slim" href="{% url 'appointments:delete_appointment' %}?id={{ appointment_day.id }}">Cancel</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
     <section class="calendar">
         <h2 class="calendar__section-title">Calendar of Appointments</h2>
         <details class="calendar__month-wrapper">

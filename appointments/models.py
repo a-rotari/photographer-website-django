@@ -9,7 +9,7 @@ class Day(models.Model):
     date = models.DateField()
     email = models.EmailField(max_length=254, blank=True)
     busy = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=254)
+    first_name = models.CharField(null=True, blank=True, max_length=254)
     last_name = models.CharField(null=True, blank=True, max_length=254)
     message = models.CharField(null=True, blank=True, max_length=1800)
     phone = models.CharField(null=True, blank=True, max_length=20)

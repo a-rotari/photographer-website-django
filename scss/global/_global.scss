@@ -96,13 +96,25 @@ a.button-link {
     padding: 10px;
     display: block;
 
-    &--margin {
-        margin: 20px auto;
+    &--margin-block {
+        margin-block: 20px;
+    }
+
+    &--margin-centered {
+        margin-inline: auto;
     }
 
     &--centered {
         width: fit-content;
         margin-inline: auto;
+    }
+
+    &--slim {
+        padding: 0px 5px;
+    }
+
+    &--inline {
+        display: inline-block;
     }
 }
 

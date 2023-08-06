@@ -86,7 +86,6 @@ def display_client_area(request):
 
     galleries = request.user.galleries.all()
     galleries_data = prepare_galleries(galleries)
-    print(type(this_month_days), type(appointment_days))
     return render(
         request, "galleries/client_area.html",
         { 'breadcrumbs': breadcrumbs,
@@ -98,7 +97,6 @@ def display_client_area(request):
             'next_month_days': next_month_days,
             'next_month_dummy_days': next_month_dummy_days,
             'appointment_days': appointment_days})
-
 
 
 def modify_position(request):
