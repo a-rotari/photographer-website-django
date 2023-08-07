@@ -61,8 +61,8 @@
                 {% endfor %}
                 {% for day in this_month_days %}
                     <div class="calendar__date">
-                        <p class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %} {% if day in appointment_days %}calendar__date-label--user-appointment{% endif %}">
-                            {{ day.date.day }}
+                        <p class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
+                            {{ day.0.date.day }}
                         </p>
                     </div>
                 {% endfor %}
@@ -84,8 +84,8 @@
                 {% endfor %}
                 {% for day in next_month_days %}
                     <div class="calendar__date">
-                        <p class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %} {% if day in appointment_days %}calendar__date-label--user-appointment{% endif %}">
-                            {{ day.date.day }}
+                        <p class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
+                            {{ day.0.date.day }}
                         </p>
                     </div>
                 {% endfor %}

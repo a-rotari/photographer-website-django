@@ -24,9 +24,9 @@
                     {% endfor %}
                     {% for day in this_month_days %}
                         <div class="calendar__date">
-                            <input type="radio" id="date_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
-                            <label class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %}" for="date_{{ day.date.day }}">
-                                {{ day.date.day }}
+                            <input type="radio" id="date_{{ day.0.date.day }}" name="selected_date" value="{{ day.0.date.year }}_{{ day.0.date.month }}_{{ day.0.date.day }}" {% if day.0.busy or not day.1 %}disabled{% endif %}>
+                            <label class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}" for="date_{{ day.0.date.day }}">
+                                {{ day.0.date.day }}
                             </label>
                         </div>
                     {% endfor %}
@@ -48,9 +48,9 @@
                     {% endfor %}
                     {% for day in next_month_days %}
                         <div class="calendar__date">
-                            <input type="radio" id="date_{{ day.date.month }}_{{ day.date.day }}" name="selected_date" value="{{ day.date.year }}_{{ day.date.month }}_{{ day.date.day }}" {% if day.busy %}disabled{% endif %}>
-                            <label class="calendar__date-label {% if day.busy %}calendar__date-label--busy{% endif %}" for="date_{{day.date.month}}_{{ day.date.day }}">
-                                {{ day.date.day }}
+                            <input type="radio" id="date_{{ day.0.date.month }}_{{ day.0.date.day }}" name="selected_date" value="{{ day.0.date.year }}_{{ day.0.date.month }}_{{ day.0.date.day }}" {% if day.0.busy or not day.1 %}disabled{% endif %}>
+                            <label class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}" for="date_{{day.0.date.month}}_{{ day.0.date.day }}">
+                                {{ day.0.date.day }}
                             </label>
                         </div>
                     {% endfor %}

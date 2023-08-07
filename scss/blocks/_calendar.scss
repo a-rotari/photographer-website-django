@@ -90,6 +90,10 @@
             color: #fff;
         }
 
+        &--passed {
+            opacity: 0.3;
+        }
+
         &--user-appointment {
             background-color: rgba(g.$accent, 0.3);
             color: #fff;

@@ -77,7 +77,7 @@ def display_client_area(request):
     today = date.today()
     this_month_name = today.strftime('%B')
     this_month_days, this_month_dummy_days = create_calendar(today)
-    appointment_days = Day.objects.filter(client=request.user)
+    appointment_days = Day.objects.filter(client=request.user, date__gte=today)
     next_month_date = today + relativedelta(months=1)
     next_month_name = next_month_date.strftime('%B')
     next_month_days, next_month_dummy_days = create_calendar(next_month_date)
