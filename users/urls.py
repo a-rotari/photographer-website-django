@@ -38,4 +38,9 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path(
+        "signup/<uidb64>/<token>/",
+        views.UserActivationView.as_view(),
+        name="user_activation",
+    ),
 ]
