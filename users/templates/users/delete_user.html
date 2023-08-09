@@ -1,0 +1,27 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+
+{% block title %}Delete User{% endblock title %}
+
+{% block main_navigation %}{% endblock main_navigation %}
+
+{% block content %}
+{% if success %}
+<section class="auth-form">
+    <h1 class="auth-form__title">Your account has been deleted</h1>
+    <p class="auth-form__subtitle">I am truly sorry to see you go. Wishing you all the best, and hoping for an opportunity to take great photos of you in the future.</p>
+    <a class="button-link button-link--margin-block" href="{% url 'galleries:display_homepage' %}">Bye!</a>
+</section>
+{% else %}
+<section class="auth-form">
+    <h1 class="auth-form__title">Your account will be deleted</h1>
+    <p class="auth-form__subtitle">Please confirm that you want to delete your account</p>
+    <form method="post"  action="{% url 'users:delete_user' %}">
+        {% csrf_token %}
+        <input type="hidden" value="{{ user.id }}" name="id">
+        <input class="auth-form__form-input auth-form__form-input--inline" type="submit" value="Delete My Account">
+        <a class="button-link button-link--inline auth-form__form-input auth-form__form-input--inline auth-form__form-input--left-margin" href="{% url 'galleries:client_area' %}">Go back to Client Area</a>
+    </form>
+</section>
+{% endif %}
+{% endblock content %}

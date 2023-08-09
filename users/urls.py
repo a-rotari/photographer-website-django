@@ -43,4 +43,9 @@ urlpatterns = [
         views.UserActivationView.as_view(),
         name="user_activation",
     ),
+    path(
+        "delete-user/",
+        views.delete_user,
+        name="delete_user",
+    ),
 ]

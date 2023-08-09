@@ -74,6 +74,7 @@
         justify-content: space-between;
         align-items: center;
         padding-block: 20px;
+        column-gap: 10px;
 
         @media (min-width: g.$mobile-large-width) {
             padding-inline: 10%;

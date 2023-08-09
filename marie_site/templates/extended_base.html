@@ -88,6 +88,7 @@
                 {% block client_area %}
                   <a class="button-link" href="{% url 'galleries:client_area' %}">Client Area</a>
                 {% endblock client_area %}
+                {% block delete_user %}{% endblock delete_user %}
                 {% block logout %}
                   <form method="post">
                     {% csrf_token %}

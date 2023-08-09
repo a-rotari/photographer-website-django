@@ -9,6 +9,11 @@
 
 {% block client_area %}{% endblock client_area %}
 
+{% block delete_user %}
+    <a class="button-link" href="{% url 'users:delete_user' %}">Delete Account</a>
+    {% comment %} <a class="button-link" href="#">Delete Account</a> {% endcomment %}
+{% endblock delete_user %}
+
 {% block content %}
     <section class="galleries">
         <h2 class="galleries__section-title">
