@@ -11,7 +11,6 @@
 
 {% block delete_user %}
     <a class="button-link" href="{% url 'users:delete_user' %}">Delete Account</a>
-    {% comment %} <a class="button-link" href="#">Delete Account</a> {% endcomment %}
 {% endblock delete_user %}
 
 {% block content %}
@@ -41,61 +40,60 @@
                 {% for appointment_day in appointment_days %}
                     <li class="appointments-list__list-item">
                         <p class="appointments-list__list-item-text">{{ appointment_day.date }}</p>
-                        {% comment %} <a class="button-link button-link--margin button-link--centered" href="{% url 'appointments:create_appointment' %}">Create an appointment</a> {% endcomment %}
                         <a class="appointments-list__list-item-link button-link button-link--slim" href="{% url 'appointments:delete_appointment' %}?id={{ appointment_day.id }}">Cancel</a>
                     </li>
                 {% endfor %}
             </ul>
         {% endif %}
     </section>
-    <section class="calendar">
-        <h2 class="calendar__section-title">Calendar of Appointments</h2>
-        <details class="calendar__month-wrapper">
-            <summary class="calendar__month">{{ this_month_name  }}</summary>
-            <div class="calendar__dates">
-                <div class="calendar__date">Sun</div>
-                <div class="calendar__date">Mon</div>
-                <div class="calendar__date">Tue</div>
-                <div class="calendar__date">Wed</div>
-                <div class="calendar__date">Thu</div>
-                <div class="calendar__date">Fri</div>
-                <div class="calendar__date">Sat</div>
+    <section class="calendar calendar--mini-display">
+        <h2 class="calendar__section-title calendar__section-title--grid-heading">Appointment Availability</h2>
+        <div class="calendar__month-wrapper calendar__month-wrapper--mini-display">
+            <h3 class="calendar__month calendar__month--mini-display">{{ this_month_name  }}</h3>
+            <div class="calendar__dates calendar__dates--mini-display">
+                <div class="calendar__date calendar__date--mini-display">Sun</div>
+                <div class="calendar__date calendar__date--mini-display">Mon</div>
+                <div class="calendar__date calendar__date--mini-display">Tue</div>
+                <div class="calendar__date calendar__date--mini-display">Wed</div>
+                <div class="calendar__date calendar__date--mini-display">Thu</div>
+                <div class="calendar__date calendar__date--mini-display">Fri</div>
+                <div class="calendar__date calendar__date--mini-display">Sat</div>
 
                 {% for dummy_day in this_month_dummy_days %}
-                    <div class="calendar__date calendar__date--dummy"></div>
+                    <div class="calendar__date calendar__date--mini-display calendar__date--dummy"></div>
                 {% endfor %}
                 {% for day in this_month_days %}
-                    <div class="calendar__date">
-                        <p class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
+                    <div class="calendar__date calendar__date--mini-display">
+                        <p class="calendar__date-label calendar__date-label--mini-display {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
                             {{ day.0.date.day }}
                         </p>
                     </div>
                 {% endfor %}
             </div>
-        </details>
-        <details class="calendar__month-wrapper">
-            <summary class="calendar__month">{{ next_month_name  }}</summary>
-            <div class="calendar__dates">
-                <div class="calendar__date">Sun</div>
-                <div class="calendar__date">Mon</div>
-                <div class="calendar__date">Tue</div>
-                <div class="calendar__date">Wed</div>
-                <div class="calendar__date">Thu</div>
-                <div class="calendar__date">Fri</div>
-                <div class="calendar__date">Sat</div>
+        </div>
+        <div class="calendar__month-wrapper calendar__month-wrapper--mini-display">
+            <h3 class="calendar__month calendar__month--mini-display">{{ next_month_name  }}</h3>
+            <div class="calendar__dates calendar__dates--mini-display">
+                <div class="calendar__date calendar__date--mini-display">Sun</div>
+                <div class="calendar__date calendar__date--mini-display">Mon</div>
+                <div class="calendar__date calendar__date--mini-display">Tue</div>
+                <div class="calendar__date calendar__date--mini-display">Wed</div>
+                <div class="calendar__date calendar__date--mini-display">Thu</div>
+                <div class="calendar__date calendar__date--mini-display">Fri</div>
+                <div class="calendar__date calendar__date--mini-display">Sat</div>
 
                 {% for dummy_day in next_month_dummy_days %}
-                    <div class="calendar__date calendar__date--dummy"></div>
+                    <div class="calendar__date calendar__date--mini-display calendar__date--dummy"></div>
                 {% endfor %}
                 {% for day in next_month_days %}
-                    <div class="calendar__date">
-                        <p class="calendar__date-label {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
+                    <div class="calendar__date calendar__date--mini-display">
+                        <p class="calendar__date-label calendar__date-label--mini-display {% if day.0.busy %}calendar__date-label--busy{% endif %} {% if day.0 in appointment_days %}calendar__date-label--user-appointment{% endif %} {% if not day.1 %}calendar__date-label--passed{% endif %}">
                             {{ day.0.date.day }}
                         </p>
                     </div>
                 {% endfor %}
             </div>
-        </details>
-        <a class="button-link button-link--margin button-link--centered" href="{% url 'appointments:create_appointment' %}">Create an appointment</a>
+        </div>
+        <a class="button-link button-link--margin button-link--centered calendar__centered-button--grid" href="{% url 'appointments:create_appointment' %}">Create an appointment</a>
     </section>
 {% endblock content %}

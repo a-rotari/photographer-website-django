@@ -1,12 +1,36 @@
 @use '../global/variables' as g;
 
 .calendar {
-    margin-block-end: 20px;
+    margin-block-end: 40px;
+
+    &--mini-display {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 8px;
+        grid-template-rows: auto auto auto;
+
+        @media (min-width: g.$mobile-large-width) {
+            width: 345px;
+            margin-inline: auto;
+        }
+
+        @media (min-width: g.$tablet-width) {
+            width: 738px;
+        }
+
+        @media (min-width: g.$desktop-width) {
+            width: 822px;
+        }
+    }
 
     &__section-title {
         margin-block-start: 36px;
         margin-block-end: 20px;
         text-align: center;
+
+        &--grid-heading {
+            grid-column: 1 / -1;
+        }
     }
 
     &__form .errorlist {
@@ -17,6 +41,17 @@
     &__month-wrapper {
         @media (min-width: g.$tablet-width) {
             padding-inline: 40px;
+        }
+
+        &--mini-display {
+            margin-block-end: 15px;
+            justify-items: end;
+            grid-column: 1 / -1;
+
+            @media (min-width: g.$tablet-width) {
+                grid-column: unset;
+                margin-block-end: 36px;
+            }
         }
     }
 
@@ -32,6 +67,20 @@
         @media (min-width: g.$tablet-width) {
             font-size: 42px;
             margin-block-end: 0;
+        }
+
+        &--mini-display {
+            font-size: 10px;
+            margin-block-end: 5px;
+            text-align: center;
+
+            @media (min-width: g.$tablet-width) {
+                font-size: 16px;
+            }
+
+            @media (min-width: g.$tablet-width) {
+                font-size: 20px;
+            }
         }
     }
 
@@ -53,6 +102,24 @@
             width: 572px;
             gap: 24px;
         }
+
+        &--mini-display {
+            width: 186px;
+            gap: 10px;
+            margin-block-end: 12px;
+
+            @media (min-width: g.$mobile-large-width) {
+                margin: 0 auto;
+            }
+
+            @media (min-width: g.$tablet-width) {
+                width: 228px;
+            }
+
+            @media (min-width: g.$desktop-width) {
+                width: 326px;
+            }
+        }
     }
 
     &__date {
@@ -71,6 +138,22 @@
 
         &--dummy {
             visibility: hidden;
+        }
+
+        &--mini-display {
+            width: 18px;
+            height: 18px;
+            font-size: 8px;
+
+            @media (min-width: g.$tablet-width) {
+                width: 24px;
+                height: 24px;
+            }
+
+            @media (min-width: g.$desktop-width) {
+                width: 38px;
+                height: 38px;
+            }
         }
     }
 
@@ -98,6 +181,10 @@
             background-color: rgba(g.$accent, 0.3);
             color: #fff;
         }
+
+        &--mini-display {
+            font-size: 8px;
+        }
     }
 
     &__date input[type="radio"] {
@@ -123,6 +210,13 @@
         @media (min-width: g.$desktop-width) {
             margin-block-start: 28px;
             margin-block-end: 54px;
+        }
+    }
+
+    &__centered-button {
+        &--grid {
+            grid-column: 1 / -1;
+            margin-block-start: 20px;
         }
     }
 
