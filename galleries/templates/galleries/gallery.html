@@ -28,7 +28,6 @@
           media="(min-width: 1200px)"
         />
         <img
-          {% comment %} src="{% static 'placeholder.jpg' %}" {% endcomment %}
           src="{{ photo.placeholder }}"
           draggable="false"
           class="gallery__img"
@@ -65,7 +64,6 @@
         alt=""
         />
       </picture>
-        {% comment %} {% block about-me %}
-        {% endblock about-me %} {% endcomment %}
   {% endfor %}
+  <a href="#" class="scroll-to-top">Top</a>
 </section>

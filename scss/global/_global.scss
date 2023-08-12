@@ -139,3 +139,25 @@ label.required_asterisk::after {
     color: g.$color-error;
     font-size: 10px;
 }
+
+a.scroll-to-top {
+    @extend %button-style;
+    background-color: g.$accent;
+    border: none;
+    color: #fff;
+    display: none;
+    position: fixed;
+    bottom: 7%;
+    right: 5%;
+    padding: 10px 15px;
+    text-decoration: none;
+
+    &:hover {
+        background-color: g.$text-primary;
+        color: #fff;
+    }
+}
+
+a.scroll-to-top.show {
+    display: inline-block;
+}
