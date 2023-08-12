@@ -1,7 +1,6 @@
 from PIL import Image
 from io import BytesIO
 import shutil
-import uuid
 import os
 
 from django.urls import reverse
@@ -134,6 +133,5 @@ def get_client_area_breadcrumbs():
     return breadcrumbs
 
 def get_gallery_archive_upload_path(instance, filename):
-    # Generate a unique filename using a UUID
     filename, ext = os.path.splitext(filename)
-    return f'{uuid.uuid4()}{ext}'
+    return f'{instance.gallery.slug}{ext}'
