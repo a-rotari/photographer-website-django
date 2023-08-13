@@ -14,6 +14,8 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_str, force_bytes
 from .models import User
+from .helpers import send_email
+
 
 class UserLoginView(LoginView):
     form_class = AuthenticationForm
@@ -93,7 +95,7 @@ class SignUpView(CreateView):
         message = f"Click the following link to confirm your registration:\n\n{confirmation_url}"
         from_email = None
         recipient_list = [user.email]
-        send_mail(subject, message, from_email, recipient_list)
+        send_email(self.request, subject, message, from_email, recipient_list)
 
 
 class UserPasswordResetView(PasswordResetView):
@@ -110,14 +112,6 @@ class UserPasswordResetView(PasswordResetView):
             {"text": "Reset Password", "href": "#"}
         ]
         return context
-
-
-def send_email(request):
-    user = request.user
-    subject = "Test Subject"
-    message = "Test Message"
-    user.email_user(subject, message)
-    return redirect("display_homepage")
 
 
 class UserActivationView(View):
