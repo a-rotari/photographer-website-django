@@ -1,7 +1,7 @@
 const pictures = window.document.querySelectorAll('.gallery__photo');
 
 const config = {
-    rootMargin: '50px 0px',
+    rootMargin: '20px 0px',
     threshold: 0.1
 };
 
