@@ -35,15 +35,15 @@
           data-src="{{ photo.1920w }}"
           alt=""
         />
-        {% if user.is_superuser %}
-        <form method="post" class="gallery__photo-move gallery__photo-move--up hidden">
+        {% if user.is_superuser and request.session.toggle_buttons %}
+        <form method="post" class="gallery__photo-move gallery__photo-move--up">
           {% csrf_token %}
           <input type="hidden" name="direction" value="up">
           <input type="hidden" name="position" value="{{ photo.position }}">
           <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
           <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&uarr;</button>
         </form>
-        <form method="post" class="gallery__photo-move gallery__photo-move--down hidden">
+        <form method="post" class="gallery__photo-move gallery__photo-move--down">
           {% csrf_token %}
           <input type="hidden" name="direction" value="down">
           <input type="hidden" name="position" value="{{ photo.position }}">

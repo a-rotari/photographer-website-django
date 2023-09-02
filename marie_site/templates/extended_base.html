@@ -73,9 +73,10 @@
         <ul class="main-nav__user-items">
             {% block toggle_position %}
               {% if user.is_superuser %}
-                <li class="main-nav__user-item">
-                  <button id="toggle-position">Toggle position buttons</button>
-                </li>
+                <form method="post" class="main-nav__user-item">
+                  {% csrf_token %}
+                  <button formaction="{% url 'galleries:toggle_buttons' %}" formmethod="post" type="submit">Toggle Buttons</button>
+                </form>
               {% endif %}
             {% endblock toggle_position %}
             {% block create_appointment %}

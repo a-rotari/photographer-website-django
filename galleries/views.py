@@ -123,6 +123,15 @@ def modify_position(request):
             swapped_position.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def toggle_buttons(request):
+    if (not request.user.is_authenticated) or (not request.user.is_staff):
+        return HttpResponseRedirect(reverse('galleries:display_homepage'))
+    if 'toggle_buttons' in request.session:
+        request.session['toggle_buttons'] = not request.session['toggle_buttons']
+    else:
+        request.session['toggle_buttons'] = True
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def upload(request):
     if (not request.user.is_authenticated) or (not request.user.is_staff):
