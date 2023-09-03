@@ -32,7 +32,7 @@ def copy_in_memory_uploaded_file(file):
         content_type=content_type,
         size=file_size,
         charset=charset,
-        content_type_extra=content_type_extra
+        content_type_extra=content_type_extra,
     )
 
     copied_bytesio = BytesIO()
@@ -53,10 +53,7 @@ def copy_temporary_uploaded_file(file):
         charset=file.charset,
         content_type_extra=file.content_type_extra,
     )
-    shutil.copyfile(
-        file.temporary_file_path(),
-        copied_file.temporary_file_path()
-    )
+    shutil.copyfile(file.temporary_file_path(), copied_file.temporary_file_path())
     copied_file.seek(0)
     return copied_file
 
@@ -73,21 +70,22 @@ def prepare_galleries(galleries):
     for gallery in galleries:
         thumbnail_url = (
             gallery.photos.first()
-            .optimizedphoto_set.get(image_subtype='480w')
+            .optimizedphoto_set.get(image_subtype="480w")
             .image.url
         )
         gallery_archive = gallery.galleryarchive_set.first()
-        archive_url = gallery_archive.archive_url.url if gallery_archive else ''
+        archive_url = gallery_archive.archive_url.url if gallery_archive else ""
 
         gallery_data = {
-            'thumbnail': thumbnail_url,
-            'slug': gallery.slug,
-            'title': gallery.name,
-            'displayed_date': gallery.displayed_date,
-            'archive_url': archive_url
+            "thumbnail": thumbnail_url,
+            "slug": gallery.slug,
+            "title": gallery.name,
+            "displayed_date": gallery.displayed_date,
+            "archive_url": archive_url,
         }
         galleries_data.append(gallery_data)
     return galleries_data
+
 
 def prepare_breadcrumbs(*args):
     breadcrumbs = []
@@ -96,42 +94,41 @@ def prepare_breadcrumbs(*args):
     return breadcrumbs
 
 
-
 def get_gallery_breadcrumbs(gallery):
-    home = { 'text': 'Home',
-             'href': reverse('galleries:display_homepage')}
-    current_gallery = { 'text': gallery.name,
-                        'href': ''}
+    home = {"text": "Home", "href": reverse("galleries:display_homepage")}
+    current_gallery = {"text": gallery.name, "href": ""}
 
-    if gallery.type == 'people':
-        people = { 'text': 'People',
-                    'href': reverse('galleries:display_people_galleries')}
+    if gallery.gallery_type == "people":
+        people = {
+            "text": "People",
+            "href": reverse("galleries:display_people_galleries"),
+        }
         return prepare_breadcrumbs(home, people, current_gallery)
-    elif gallery.type == 'urban' or gallery.type == 'nature':
+    elif gallery.gallery_type == "urban" or gallery.gallery_type == "nature":
         return prepare_breadcrumbs(home, current_gallery)
-    elif gallery.type == 'personal':
-        personal_dashboard = { 'text': 'Client Area',
-                               'href': reverse('galleries:client_area')}
+    elif gallery.gallery_type == "personal":
+        personal_dashboard = {
+            "text": "Client Area",
+            "href": reverse("galleries:client_area"),
+        }
         return prepare_breadcrumbs(home, personal_dashboard, current_gallery)
     return []
 
 
 def get_people_breadcrumbs():
-    home = { 'text': 'Home',
-             'href': reverse('galleries:display_homepage')}
-    people = { 'text': 'People',
-              'href': ''}
+    home = {"text": "Home", "href": reverse("galleries:display_homepage")}
+    people = {"text": "People", "href": ""}
     breadcrumbs = prepare_breadcrumbs(home, people)
     return breadcrumbs
 
+
 def get_client_area_breadcrumbs():
-    home = { 'text': 'Home',
-             'href': reverse('galleries:display_homepage')}
-    client_area = { 'text': 'Client Area',
-              'href': ''}
+    home = {"text": "Home", "href": reverse("galleries:display_homepage")}
+    client_area = {"text": "Client Area", "href": ""}
     breadcrumbs = prepare_breadcrumbs(home, client_area)
     return breadcrumbs
 
+
 def get_gallery_archive_upload_path(instance, filename):
     filename, ext = os.path.splitext(filename)
-    return f'{instance.gallery.slug}{ext}'
+    return f"{instance.gallery.slug}{ext}"
