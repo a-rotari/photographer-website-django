@@ -1,11 +1,19 @@
-from PIL import Image
-from io import BytesIO
 import shutil
-import os
-
+from io import BytesIO
+from django.db.models import QuerySet
+from django.core.files.uploadedfile import (InMemoryUploadedFile,
+                                            TemporaryUploadedFile)
 from django.urls import reverse
-from django.core.files.uploadedfile import TemporaryUploadedFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from typing import List, Dict, Union, TYPE_CHECKING
+
+from PIL import Image
+
+from .models import Gallery
+
+HOMEPAGE_SLUG = 'homepage'
+HOMEPAGE_TYPE = 'homepage'
+HOMEPAGE_NAME = 'Maria Rotari Photography'
+HOMEPAGE_DESCRIPTION = 'Photoset for the main page'
 
 
 def image_resize(image, tgt_width):
@@ -53,7 +61,8 @@ def copy_temporary_uploaded_file(file):
         charset=file.charset,
         content_type_extra=file.content_type_extra,
     )
-    shutil.copyfile(file.temporary_file_path(), copied_file.temporary_file_path())
+    shutil.copyfile(file.temporary_file_path(),
+                    copied_file.temporary_file_path())
     copied_file.seek(0)
     return copied_file
 
@@ -129,6 +138,42 @@ def get_client_area_breadcrumbs():
     return breadcrumbs
 
 
-def get_gallery_archive_upload_path(instance, filename):
-    filename, ext = os.path.splitext(filename)
-    return f"{instance.gallery.slug}{ext}"
+def get_ordered_gallery_photos(gallery: Gallery) -> QuerySet:
+    """
+    Returns photos for a given gallery ordered by their position.
+    """
+    return gallery.photos.all().order_by('-galleryphoto__photo_position')
+
+
+def ensure_homepage_gallery() -> Gallery:
+    """
+    Ensures that a homepage gallery exists, creates one if not, and returns it.
+    """
+    gallery, created = Gallery.objects.get_or_create(
+        slug=HOMEPAGE_SLUG,
+        defaults={
+            'type': HOMEPAGE_TYPE,
+            'name': HOMEPAGE_NAME,
+            'description': HOMEPAGE_DESCRIPTION,
+        }
+    )
+    return gallery
+
+
+def prepare_photo_context(gallery_photos: QuerySet, gallery: Gallery) -> List[Dict[str, Union[str, int]]]:
+    """
+    Prepares the context data for photos in a gallery.
+    """
+    photo_context_data = []
+    for photo in gallery_photos:
+        optimized_photos = photo.optimizedphoto_set.all()
+        photo_data = {
+            optimized_photo.image_subtype: optimized_photo.image.url
+            for optimized_photo in optimized_photos
+        }
+        photo_data.update({
+            'position': photo.galleryphoto_set.get(gallery=gallery).photo_position,
+            'gallery_id': gallery.id
+        })
+        photo_context_data.append(photo_data)
+    return photo_context_data

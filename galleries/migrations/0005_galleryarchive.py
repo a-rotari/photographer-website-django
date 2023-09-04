@@ -15,11 +15,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GalleryArchive',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('archive_url', models.FileField(upload_to=galleries.helpers.get_gallery_archive_upload_path)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('archive_url', models.FileField(
+                    upload_to=galleries.models.get_gallery_archive_upload_path)),
                 ('uploaded_at', models.DateTimeField(auto_now_add=True)),
                 ('name', models.SlugField(blank=True)),
-                ('gallery', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='galleries.gallery')),
+                ('gallery', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='galleries.gallery')),
             ],
         ),
     ]

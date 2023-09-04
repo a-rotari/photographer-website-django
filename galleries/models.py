@@ -1,7 +1,6 @@
+import os
 from django.contrib.auth import get_user_model
 from django.db import models
-
-from .helpers import get_gallery_archive_upload_path
 
 User = get_user_model()
 
@@ -112,6 +111,11 @@ class OptimizedPhoto(models.Model):
             (f"Optimized { self.parent_image.title } " if self.parent_image.title
              else 'Optimized Unnamed Photo ') + self.image_subtype
         )
+
+
+def get_gallery_archive_upload_path(self, filename):
+    filename, ext = os.path.splitext(filename)
+    return f"{self.gallery.slug}{ext}"
 
 
 class GalleryArchive(models.Model):

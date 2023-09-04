@@ -1,63 +1,61 @@
 import os
 import uuid
+from datetime import date, datetime
 from io import BytesIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse, resolve
-from django.views.generic.edit import CreateView
 from django.db.models import Max
-from datetime import datetime, date
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.urls import resolve, reverse
+from django.views.generic.edit import CreateView
+
+from appointments.helpers import create_calendar
+from appointments.models import Day
 from dateutil.relativedelta import relativedelta
-
-
-
 from PIL import ImageFilter
 
 from .config import optimization_subtypes
 from .forms import UploadPhotosForm
-from .helpers import get_original_image, image_resize, prepare_galleries, get_people_breadcrumbs, get_gallery_breadcrumbs, get_client_area_breadcrumbs
-from appointments.helpers import create_calendar
-from appointments.models import Day
-from .models import Gallery, OptimizedPhoto, Photo, GalleryPhoto
+from .helpers import (get_client_area_breadcrumbs, get_gallery_breadcrumbs,
+                      get_original_image, get_people_breadcrumbs, image_resize,
+                      prepare_galleries, get_ordered_gallery_photos,
+                      ensure_homepage_gallery, prepare_photo_context)
+from .models import Gallery, GalleryPhoto, OptimizedPhoto, Photo
 
 
-def display_gallery(request, slug='homepage'):
-    try:
-        gallery = Gallery.objects.get(slug=slug)
-    except Gallery.DoesNotExist:
-        if slug == 'homepage':
-            gallery = Gallery.objects.create(
-                slug='homepage',
-                type='homepage',
-                name='Maria Rotari Photography',
-                description='Photoset for the main page',
-            )
-            gallery.save()
-        else:
-            raise Gallery.DoesNotExist
-    title = gallery.name
-    gallery_photos = gallery.photos.all().order_by('-galleryphoto__photo_position')
-    photos_context = []  # create list of photo urls dictionaries for template
-    for photo in gallery_photos:
-        optimized_photos = photo.optimizedphoto_set.all()
-        # dictionary containing subtype '480w' as key and url as value
-        photo_data = {
-            optimized_photo.image_subtype: optimized_photo.image.url
-            for optimized_photo in optimized_photos
-        }
-        photo_data['position'] = photo.galleryphoto_set.get(gallery=gallery).photo_position
-        photo_data['gallery_id'] = gallery.id
-        photos_context.append(photo_data)
+def display_gallery(request: HttpRequest, slug: str = 'homepage') -> HttpResponse:
+    """
+    Display a gallery page based on the given slug.
+
+    Parameters:
+    - request: HttpRequest object
+    - slug: slug of the gallery to display, default is 'homepage'
+
+    Returns:
+    - HttpResponse with the gallery page
+    """
     if slug == 'homepage':
-        template = 'galleries/homepage.html'
+        gallery = ensure_homepage_gallery()
     else:
-        template = 'galleries/galleries_base.html'
+        gallery = get_object_or_404(Gallery, slug=slug)
+
+    title = gallery.name
+    gallery_photos = get_ordered_gallery_photos(gallery)
+    photo_context_data = prepare_photo_context(gallery_photos, gallery)
+
+    template = (
+        'galleries/homepage.html' if slug == 'homepage'
+        else 'galleries/galleries_base.html'
+    )
+
     breadcrumbs = get_gallery_breadcrumbs(gallery)
-    return render(request,
-                  template,
-                  {'title': title, 'breadcrumbs': breadcrumbs, 'photos': photos_context})
+    context = {
+        'title': title,
+        'breadcrumbs': breadcrumbs,
+        'photos': photo_context_data
+    }
+    return render(request, template, context)
 
 
 def display_people_galleries(request):
@@ -66,8 +64,8 @@ def display_people_galleries(request):
     galleries_data = prepare_galleries(galleries)
     return render(request,
                   'galleries/people_display.html',
-                  { 'breadcrumbs': breadcrumbs,
-                    'galleries': galleries_data})
+                  {'breadcrumbs': breadcrumbs,
+                   'galleries': galleries_data})
 
 
 def display_client_area(request):
@@ -88,7 +86,7 @@ def display_client_area(request):
     galleries_data = prepare_galleries(galleries)
     return render(
         request, "galleries/client_area.html",
-        { 'breadcrumbs': breadcrumbs,
+        {'breadcrumbs': breadcrumbs,
             'galleries': galleries_data,
             'this_month_name': this_month_name,
             'this_month_days': this_month_days,
@@ -108,20 +106,26 @@ def modify_position(request):
         photo = gallery.photos.get(galleryphoto__photo_position=position)
         if direction == 'up':
             modifier = 1
-            compared_photo = gallery.photos.order_by('-galleryphoto__photo_position').first()
+            compared_photo = gallery.photos.order_by(
+                '-galleryphoto__photo_position').first()
         else:
             modifier = -1
-            compared_photo = gallery.photos.order_by('-galleryphoto__photo_position').last()
+            compared_photo = gallery.photos.order_by(
+                '-galleryphoto__photo_position').last()
         if photo != compared_photo:
             new_position = position + modifier
-            swapped_photo = gallery.photos.get(galleryphoto__photo_position=(new_position))
-            updated_position = GalleryPhoto.objects.get(photo=photo, gallery=gallery)
-            swapped_position = GalleryPhoto.objects.get(photo=swapped_photo, gallery=gallery)
+            swapped_photo = gallery.photos.get(
+                galleryphoto__photo_position=(new_position))
+            updated_position = GalleryPhoto.objects.get(
+                photo=photo, gallery=gallery)
+            swapped_position = GalleryPhoto.objects.get(
+                photo=swapped_photo, gallery=gallery)
             updated_position.photo_position = new_position
             swapped_position.photo_position = position
             updated_position.save()
             swapped_position.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def toggle_buttons(request):
     if (not request.user.is_authenticated) or (not request.user.is_staff):
@@ -143,7 +147,8 @@ def upload(request):
             files = form.cleaned_data.get('image')  # get the files to upload
             gallery = form.cleaned_data.get('gallery')
             if gallery.photos.all().exists():
-                max_position = gallery.photos.aggregate(Max('galleryphoto__photo_position'))
+                max_position = gallery.photos.aggregate(
+                    Max('galleryphoto__photo_position'))
                 position = max_position['galleryphoto__photo_position__max']
             else:
                 position = 0
