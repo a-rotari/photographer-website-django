@@ -57,12 +57,11 @@
             <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
             <button formaction="{% url 'galleries:delete_local' %}" formmethod="post" type="submit">Remove</button>
           </form>
-          <form method="post" class="gallery__photo-move gallery__photo-move--delete-total">
+          <form method="post" class="gallery__photo-move gallery__photo-move--delete-global">
             {% csrf_token %}
-            <input type="hidden" name="direction" value="down">
             <input type="hidden" name="position" value="{{ photo.position }}">
             <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
-            <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">Delete</button>
+            <button formaction="{% url 'galleries:delete_global' %}" formmethod="post" type="submit">Delete</button>
           </form>
         </div>
         {% endif %}
