@@ -48,7 +48,8 @@ def display_gallery(request: HttpRequest, slug: str = 'homepage') -> HttpRespons
         'galleries/homepage.html' if slug == 'homepage'
         else 'galleries/galleries_base.html'
     )
-
+    for p in photo_context_data:
+        print(p['position'])
     breadcrumbs = get_gallery_breadcrumbs(gallery)
     context = {
         'title': title,
@@ -60,7 +61,7 @@ def display_gallery(request: HttpRequest, slug: str = 'homepage') -> HttpRespons
 
 def display_people_galleries(request):
     breadcrumbs = get_people_breadcrumbs()
-    galleries = Gallery.objects.filter(type='people')
+    galleries = Gallery.objects.filter(gallery_type='people')
     galleries_data = prepare_galleries(galleries)
     return render(request,
                   'galleries/people_display.html',
@@ -124,6 +125,16 @@ def modify_position(request):
             swapped_position.photo_position = position
             updated_position.save()
             swapped_position.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def delete_local(request):
+    if request.user.is_superuser and request.method == 'POST':
+        position = int(request.POST.get('position'))
+        gallery_id = request.POST.get('gallery_id')
+        gallery = Gallery.objects.get(id=gallery_id)
+        GalleryPhoto.objects.get(
+            gallery=gallery, photo_position=position).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 

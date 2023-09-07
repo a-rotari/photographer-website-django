@@ -36,20 +36,35 @@
           alt=""
         />
         {% if user.is_superuser and request.session.toggle_buttons %}
-        <form method="post" class="gallery__photo-move gallery__photo-move--up">
-          {% csrf_token %}
-          <input type="hidden" name="direction" value="up">
-          <input type="hidden" name="position" value="{{ photo.position }}">
-          <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
-          <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&uarr;</button>
-        </form>
-        <form method="post" class="gallery__photo-move gallery__photo-move--down">
-          {% csrf_token %}
-          <input type="hidden" name="direction" value="down">
-          <input type="hidden" name="position" value="{{ photo.position }}">
-          <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
-          <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&darr;</button>
-        </form>
+        <div class="gallery__buttons-container">
+          <form method="post" class="gallery__photo-move gallery__photo-move--up">
+            {% csrf_token %}
+            <input type="hidden" name="direction" value="up">
+            <input type="hidden" name="position" value="{{ photo.position }}">
+            <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+            <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&uarr;</button>
+          </form>
+          <form method="post" class="gallery__photo-move gallery__photo-move--down">
+            {% csrf_token %}
+            <input type="hidden" name="direction" value="down">
+            <input type="hidden" name="position" value="{{ photo.position }}">
+            <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+            <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">&darr;</button>
+          </form>
+          <form method="post" class="gallery__photo-move gallery__photo-move--delete-local">
+            {% csrf_token %}
+            <input type="hidden" name="position" value="{{ photo.position }}">
+            <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+            <button formaction="{% url 'galleries:delete_local' %}" formmethod="post" type="submit">Remove</button>
+          </form>
+          <form method="post" class="gallery__photo-move gallery__photo-move--delete-total">
+            {% csrf_token %}
+            <input type="hidden" name="direction" value="down">
+            <input type="hidden" name="position" value="{{ photo.position }}">
+            <input type="hidden" name="gallery_id" value="{{ photo.gallery_id }}">
+            <button formaction="{% url 'galleries:modify_position' %}" formmethod="post" type="submit">Delete</button>
+          </form>
+        </div>
         {% endif %}
       </picture>
       <picture class="photo-popup">
