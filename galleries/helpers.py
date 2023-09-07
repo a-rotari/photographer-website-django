@@ -77,11 +77,15 @@ def get_original_image(file):
 def prepare_galleries(galleries):
     galleries_data = []
     for gallery in galleries:
-        thumbnail_url = (
-            gallery.photos.first()
-            .optimizedphoto_set.get(image_subtype="480w")
-            .image.url
-        )
+        thumbnail_photo = gallery.photos.first()
+        if thumbnail_photo:
+            thumbnail_url = (
+                gallery.photos.first()
+                .optimizedphoto_set.get(image_subtype="480w")
+                .image.url
+            )
+        else:
+            thumbnail_url = '#'
         gallery_archive = gallery.galleryarchive_set.first()
         archive_url = gallery_archive.archive_url.url if gallery_archive else ""
 
