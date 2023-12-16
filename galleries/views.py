@@ -16,12 +16,27 @@ from dateutil.relativedelta import relativedelta
 from PIL import ImageFilter
 
 from .config import optimization_subtypes
-from .forms import UploadPhotosForm
+from .forms import UploadPhotosForm, GalleryForm
 from .helpers import (get_client_area_breadcrumbs, get_gallery_breadcrumbs,
                       get_original_image, get_people_breadcrumbs, image_resize,
                       prepare_galleries, get_ordered_gallery_photos,
                       ensure_homepage_gallery, prepare_photo_context)
 from .models import Gallery, GalleryPhoto, OptimizedPhoto, Photo
+
+
+def create_gallery(request):
+    pass
+
+
+def manage_galleries(request):
+    template = (
+        'galleries/manage_galleries.html'
+    )
+    form = GalleryForm()
+    context = {
+        'form': form
+    }
+    return render(request, template, context)
 
 
 def display_gallery(request: HttpRequest, slug: str = 'homepage') -> HttpResponse:

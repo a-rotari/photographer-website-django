@@ -4,7 +4,7 @@
 {% block title %}Personal Page{% endblock title %}
 
 {% block content %}
-    <section class="galleries">
+    <section class="section galleries">
         {% for gallery in galleries %}
             <div class="galleries__wrapper">
                 <a class="galleries__image-link" href="{% url 'galleries:display_gallery' gallery.slug %}">

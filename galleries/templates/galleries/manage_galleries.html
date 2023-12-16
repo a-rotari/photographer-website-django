@@ -1,0 +1,21 @@
+{% extends "extended_base.html" %}
+{% load static %}
+
+{% block title %}Manage Galleries{% endblock title %}
+
+{% block main_navigation %}{% endblock main_navigation %}
+
+{% block toggle_position %}{% endblock toggle_position %}
+
+{% block client_area %}{% endblock client_area %}
+
+<a class="button-link" href="{% url 'galleries:upload' %}">Upload Photos</a>
+
+{% block content %}
+    <section class="section galleries">
+        <h2 class="section__section-title">Add gallery:</h2>
+        <form class="form__form" action="{% url 'galleries:create_gallery' %}" method="post">
+        {{ form.as_p }}
+        </form>
+    </section>
+{% endblock content %}

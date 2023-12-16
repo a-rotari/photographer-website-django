@@ -1,19 +1,6 @@
 @use '../global/variables' as g;
 
 .galleries {
-    margin-block-start: 20px;
-
-    @media (min-width: g.$tablet-width) {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    &__section-title {
-        margin-block-end: 36px;
-        text-align: center;
-        width: 100%;
-    }
-
     &__wrapper {
         display: flex;
         flex-wrap: wrap;

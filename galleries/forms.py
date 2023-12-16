@@ -1,11 +1,38 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.forms import ModelForm
-from .models import Photo, Gallery
+from .models import Photo, GalleryArchive, Gallery
+
+User = get_user_model()
 
 
-class CreateGalleryForm(forms.Form):
-    name = forms.CharField(max_length=255, label='Gallery Name')
-    description = forms.Textarea()
+class GalleryForm(forms.ModelForm):
+    slug = forms.SlugField(required=False)
+    gallery_type = forms.SlugField(required=False)
+    name = forms.CharField(max_length=255)
+    displayed_date = forms.DateField(
+        required=False, widget=forms.SelectDateWidget)
+    description = forms.CharField(widget=forms.Textarea, required=False)
+    users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    class Meta:
+        model = Gallery
+        fields = [
+            'slug',
+            'gallery_type',
+            'name',
+            'displayed_date',
+            'description',
+            'users'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(GalleryForm, self).__init__(*args, **kwargs)
+        self.fields['users'].queryset = User.objects.all()
 
 
 class UploadPhotoForm(ModelForm):

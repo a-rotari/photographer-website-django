@@ -1,0 +1,16 @@
+@use '../global/variables' as g;
+
+.section {
+    margin-block-start: 20px;
+
+    @media (min-width: g.$tablet-width) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__section-title {
+        margin-block-end: 36px;
+        text-align: center;
+        width: 100%;
+    }
+}

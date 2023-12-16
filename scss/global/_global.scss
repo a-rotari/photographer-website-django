@@ -161,3 +161,52 @@ a.scroll-to-top {
 a.scroll-to-top.show {
     display: inline-block;
 }
+
+
+.form__form {
+    width: 290px;
+
+    @media (min-width: g.$tablet-width) {
+        width: 500px;
+        font-size: 18px;
+        margin-block-start: 20px;
+    }
+
+    & .errorlist {
+        color: g.$color-error;
+        margin-block-end: 20px;
+    }
+}
+
+.form__form p {
+    margin-block-end: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: g.$tablet-width) {
+        margin-block-end: 16px;
+    }
+}
+
+.form__button-wrapper {
+    display: flex;
+    width: inherit;
+}
+
+.form__form-input {
+    margin-block-start: 10px;
+    margin-block-end: 20px;
+
+    @media (min-width: g.$tablet-width) {
+        margin-block-start: 20px;
+        margin-block-end: 30px;
+    }
+
+    .form--inline {
+        display: inline-block;
+    }
+
+    .form--left-margin {
+        margin-inline-start: 30px;
+    }
+}

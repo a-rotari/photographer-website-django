@@ -6,8 +6,8 @@
 {% block main_navigation %}{% endblock main_navigation %}
 
 {% block content %}
-    <section class="calendar">
-        <form class="calendar__form" action="{% url 'appointments:create_appointment' %}" method="post">
+    <section class="form calendar">
+        <form class="form__form calendar__form" action="{% url 'appointments:create_appointment' %}" method="post">
             <details class="calendar__month-wrapper" open>
                 <summary class="calendar__month">{{ this_month_name  }}</summary>
                 <fieldset class="calendar__dates">
