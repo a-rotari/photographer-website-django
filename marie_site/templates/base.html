@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="page" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+      {% block title %}
+        {{ page_title|default:"Untitled Page" }}
+      {% endblock title %}
+    </title>
+    <link href="{% static 'styles.min.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body class="page__body">
+    <main class="page-main">
+      {% block content %}
+      {% endblock content %}
+    </main>
+  </body>
+</html>

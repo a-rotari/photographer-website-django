@@ -1,0 +1,123 @@
+@use '../global/variables' as g;
+
+.hero {
+    font-family: "Julius Sans One", sans-serif;
+    width: 100%;
+    min-height: 60rem;
+    background-image: url('mary-banner-home-mobile.jpg');
+    background-size: 100% auto; /* 100% width, auto-adjust height */
+    background-size: cover;
+    background-position: center center;
+    display: grid;
+    grid-template-columns: 30% 50% 20%;
+
+    @media (min-width: g.$tablet-width) {
+        background-image: url('mary-banner-home-tablet.jpg');
+    }
+
+    @media (min-width: g.$desktop-width) {
+        background-image: url('mary-banner-home-desktop.jpg');
+    }
+
+    &__contacts-wrapper {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        padding-block-start: 15.3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__contacts-social-container {
+        display: flex;
+        justify-content: flex-end;
+        column-gap: 1.125rem;
+    }
+
+    &__title-wrapper {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    &__form-wrapper {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        padding-block-start: 10rem;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    &__form {
+        font-family: "Jura", sans-serif;
+        font-size: .875rem;
+        max-width: 14rem;
+
+        label {
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input,
+        textarea {
+            border: none;
+            border-bottom: 1px solid #000;
+            border-radius: 0;
+        }
+
+        p {
+            margin-block-end: 1.6rem;
+        }
+    }
+
+    &__title {
+        margin-block-start: 3rem;
+        text-align: center;
+    }
+
+    &__subtitle {
+        text-align: center;
+    }
+
+    &__section-subtitle {
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin-block-end: 1.5em;
+    }
+
+    &__contacts {
+        font-size: 2rem;
+        margin-block-end: 1.125em;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        font-family: "Julius Sans One", sans-serif;
+        font-size: 3rem;
+        letter-spacing: 0.25em;
+        font-weight: 400;
+        color: g.$text-contrast;
+    }
+
+    &__subtitle {
+        font-family: "Julius Sans One", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 0.6em;
+        font-weight: 400;
+        color: g.$text-contrast;
+    }
+}
+
+
+

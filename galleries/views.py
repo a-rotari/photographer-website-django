@@ -16,12 +16,26 @@ from dateutil.relativedelta import relativedelta
 from PIL import ImageFilter
 
 from .config import optimization_subtypes
-from .forms import UploadPhotosForm, GalleryForm
+from .forms import ContactForm, UploadPhotosForm, GalleryForm
 from .helpers import (get_client_area_breadcrumbs, get_gallery_breadcrumbs,
                       get_original_image, get_people_breadcrumbs, image_resize,
                       prepare_galleries, get_ordered_gallery_photos,
                       ensure_homepage_gallery, prepare_photo_context)
 from .models import Gallery, GalleryPhoto, OptimizedPhoto, Photo
+
+
+def display_homepage(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print('valid')
+            # Process the data in form.cleaned_data
+            # For example, send an email or save it to the database
+            pass
+    else:
+        form = ContactForm()
+
+    return render(request, 'galleries/home.html', {'form': form})
 
 
 def create_gallery(request):

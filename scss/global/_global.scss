@@ -1,6 +1,10 @@
 /* Global Styles */
 @use './variables' as g;
 
+h1, h2, h3 {
+    font-family: "Julius Sans One", sans-serif;
+}
+
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -91,6 +95,16 @@ input, textarea, button {
     @extend %button-style;
 }
 
+.form-button {
+    padding-block: 1.4em;
+    background-color: g.$background-accent;
+    color: g.$text-contrast;
+    font-weight: 400;
+    min-width: 14rem;
+    border-radius: 35px;
+    margin-block-start: 1rem;
+}
+
 a.button-link {
     @extend %button-style;
     padding: 10px;
@@ -118,7 +132,7 @@ a.button-link {
     }
 }
 
-input[type="submit"], button {
+input[type="submit"] {
     font-weight: 700;
     padding: 10px;
 }

@@ -35,6 +35,6 @@ urlpatterns = [
          views.manage_galleries,
          name='manage_galleries'),
     path('',
-         views.display_gallery,
+         views.display_homepage,
          name='display_homepage'),
 ]

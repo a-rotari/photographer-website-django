@@ -6,6 +6,13 @@ from .models import Photo, GalleryArchive, Gallery
 User = get_user_model()
 
 
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Name', max_length=100, widget=forms.TextInput(attrs={}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={}))
+    message = forms.CharField(label='Message', widget=forms.Textarea(attrs={'rows': 4}))
+    date = forms.DateField(label='Choose the date', widget=forms.DateInput(attrs={'type': 'date'}))
+
+
 class GalleryForm(forms.ModelForm):
     slug = forms.SlugField(required=False)
     gallery_type = forms.SlugField(required=False)
